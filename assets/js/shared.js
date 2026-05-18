@@ -217,13 +217,15 @@
     const params = new URLSearchParams(location.search);
     const currentSim = params.get('simulate') || '';
 
+    // target='register' 的模式只在 register.html 才有效，
+    // 一律導到 register.html 以免使用者在其他頁點了沒反應
     const states = [
-      { key: '', label: '✓ 正常模式' },
-      { key: 'fail', label: '報名 API 失敗' },
-      { key: 'duplicate', label: '重複報名' },
-      { key: 'network', label: '網路斷線' },
-      { key: 'full', label: '班級剛好滿班' },
-      { key: 'csv', label: 'CSV 載入失敗' },
+      { key: '', label: '✓ 正常模式', target: 'self' },
+      { key: 'fail', label: '報名 API 失敗', target: 'register.html' },
+      { key: 'duplicate', label: '重複報名', target: 'register.html' },
+      { key: 'network', label: '網路斷線', target: 'register.html' },
+      { key: 'full', label: '班級剛好滿班', target: 'register.html' },
+      { key: 'csv', label: 'CSV 載入失敗', target: 'self' },
     ];
 
     const wrapper = document.createElement('div');
@@ -235,7 +237,8 @@
         <ul class="demo-switcher__list">
           ${states.map(s => {
             const isActive = s.key === currentSim;
-            const url = s.key ? `${path}?simulate=${s.key}` : path;
+            const targetPath = s.target === 'self' ? path : s.target;
+            const url = s.key ? `${targetPath}?simulate=${s.key}` : targetPath;
             return `<li><a href="${url}" data-active="${isActive}">${s.label}</a></li>`;
           }).join('')}
           <li style="margin-top:8px;border-top:1px solid #eee;padding-top:8px;">

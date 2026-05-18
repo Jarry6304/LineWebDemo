@@ -664,32 +664,33 @@ body.modal-open { overflow: hidden; }
   background: var(--c-card);
   border: 1px solid var(--c-border);
   border-radius: var(--r-card);
-  padding: var(--sp-lg);
+  padding: var(--sp-xl);
   text-align: center;
   cursor: pointer;
   transition: all 200ms;
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: var(--sp-sm);
+  gap: var(--sp-md);
 }
 .keyword:hover, .keyword[aria-expanded="true"] {
   border-color: var(--c-accent);
   background: rgba(164, 199, 99, 0.08);
 }
 .keyword__icon {
-  font-size: 28px;
+  font-size: 42px;
   line-height: 1;
 }
 .keyword__name {
+  font-size: 27px;
   font-weight: 500;
   color: var(--c-primary);
 }
 .keyword__desc {
   display: none;
-  font-size: var(--fs-small);
+  font-size: 24px;
   color: var(--c-text-muted);
-  margin-top: var(--sp-xs);
+  margin-top: var(--sp-sm);
   line-height: 1.6;
 }
 .keyword[aria-expanded="true"] .keyword__desc { display: block; }
