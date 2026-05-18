@@ -300,18 +300,19 @@
   function bindSimulationAlerts() {
     // Demo 模式：點按鈕後立即顯示對應錯誤預覽，不需要填完表單才看得到
     const mode = TBMock.getSimMode();
+    const demoNote = '<br><span class="caption muted">（Demo 預覽。填完表單按送出後，也會看到此錯誤畫面）</span>';
     switch (mode) {
       case 'full':
-        showAlert('warning', '⚠ 您選擇的班級在您填寫期間剛好額滿了。請選擇其他班級或加 LINE 等候候補名單。');
+        showAlert('warning', '<strong>班級剛好額滿</strong>：您選擇的班級在您填寫期間剛好額滿了。請選擇其他班級或加 LINE 等候候補名單。');
         break;
       case 'fail':
-        showAlert('error', '❌ <strong>送出失敗</strong>：伺服器暫時無法處理您的報名，請稍後再試。<br><span class="caption muted">（Demo 預覽。填完表單按送出後，也會看到此錯誤畫面）</span>');
+        showAlert('error', '<strong>送出失敗</strong>：伺服器暫時無法處理您的報名，請稍後再試。' + demoNote);
         break;
       case 'duplicate':
-        showAlert('warning', '⚠ <strong>重複報名</strong>：您已使用此手機號碼報名過此班級。如有疑問請加 LINE 諮詢。<br><span class="caption muted">（Demo 預覽。填完表單按送出後，也會看到此錯誤畫面）</span>');
+        showAlert('warning', '<strong>重複報名</strong>：您已使用此手機號碼報名過此班級。如有疑問請加 LINE 諮詢。' + demoNote);
         break;
       case 'network':
-        showAlert('error', '📡 <strong>網路連線異常</strong>：您的報名草稿已自動保存於本機，請確認網路後重試。<br><span class="caption muted">（Demo 預覽。填完表單按送出後，也會看到此錯誤畫面）</span>');
+        showAlert('error', '<strong>網路連線異常</strong>：您的報名草稿已自動保存於本機，請確認網路後重試。' + demoNote);
         break;
     }
   }
@@ -319,11 +320,11 @@
   function showErrorAlert(err) {
     const code = err && err.code;
     if (code === 'DUPLICATE') {
-      showAlert('warning', '⚠ ' + err.message);
+      showAlert('warning', err.message);
     } else if (code === 'NETWORK') {
-      showAlert('error', '📡 ' + err.message + '（您的填寫內容已自動保存於本機）');
+      showAlert('error', err.message + '（您的填寫內容已自動保存於本機）');
     } else {
-      showAlert('error', '❌ ' + (err.message || '未知錯誤，請稍後再試。'));
+      showAlert('error', err.message || '未知錯誤，請稍後再試。');
     }
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }

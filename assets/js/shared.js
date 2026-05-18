@@ -51,20 +51,37 @@
     header.innerHTML = `
       <div class="site-header__inner">
         <a href="index.html" class="site-header__logo">
-          <svg class="site-header__logo-mark" viewBox="0 0 32 32" aria-hidden="true">
-            <ellipse cx="16" cy="20" rx="9" ry="11" fill="#2D5F3F"/>
-            <ellipse cx="13" cy="15" rx="2" ry="3" fill="#A4C763"/>
-            <ellipse cx="19" cy="15" rx="2" ry="3" fill="#A4C763"/>
-            <circle cx="13" cy="14" r="1" fill="#fff"/>
-            <circle cx="19" cy="14" r="1" fill="#fff"/>
-            <path d="M11 8 L13 11 M21 8 L19 11" stroke="#2D5F3F" stroke-width="1.5" stroke-linecap="round"/>
-          </svg>
           <span>虎甲自然</span>
         </a>
         <a href="${escapeHTML(lineUrl)}" class="site-header__back" target="_blank" rel="noopener">返回 LINE</a>
       </div>
     `;
     document.body.insertBefore(header, document.body.firstChild);
+    injectSourceBar();
+  }
+
+  // 資料來源狀態列（顯示在 header 下方，demo 用）
+  function injectSourceBar() {
+    if (!global.TBCSV) return;
+    const isSheet = global.TBCSV.sheetMode();
+    const bar = document.createElement('div');
+    bar.style.cssText = [
+      'position:sticky',
+      'top:var(--header-h)',
+      'z-index:30',
+      'padding:8px 24px',
+      'text-align:center',
+      'font-size:14px',
+      'font-weight:500',
+      'border-bottom:1px solid var(--c-border)',
+      isSheet ? 'background:rgba(66,133,244,0.08); color:#1a73e8' : 'background:rgba(45,95,63,0.05); color:var(--c-primary)',
+    ].join(';');
+    bar.setAttribute('data-source-bar', '');
+    bar.innerHTML = isSheet
+      ? '資料源：Google Sheet（模擬）— 朋友改 Sheet 即時反映，不需重新部署'
+      : '資料源：本地 CSV — 朋友改檔 push 後 1–2 分鐘重新部署';
+    const header = document.querySelector('.site-header');
+    if (header) header.insertAdjacentElement('afterend', bar);
   }
 
   // ============================================================
@@ -111,7 +128,7 @@
     banner.className = 'banner';
     banner.setAttribute('role', 'status');
     banner.innerHTML = `
-      <span>🌱 早鳥優惠：${deadline} 前報名享 ${discount}% 折扣</span>
+      <span><strong>早鳥優惠</strong>：${deadline} 前報名享 ${discount}% 折扣</span>
       <button class="banner__action" data-banner-action>看說明會</button>
       <button class="banner__close" aria-label="關閉橫幅">×</button>
     `;
@@ -217,10 +234,9 @@
     const params = new URLSearchParams(location.search);
     const currentSim = params.get('simulate') || '';
 
-    // target='register' 的模式只在 register.html 才有效，
-    // 一律導到 register.html 以免使用者在其他頁點了沒反應
-    const states = [
-      { key: '', label: '✓ 正常模式', target: 'self' },
+    // 提交相關模式只在 register.html 有效，一律導去 register
+    const errorStates = [
+      { key: '', label: '正常模式', target: 'self' },
       { key: 'fail', label: '報名 API 失敗', target: 'register.html' },
       { key: 'duplicate', label: '重複報名', target: 'register.html' },
       { key: 'network', label: '網路斷線', target: 'register.html' },
@@ -228,22 +244,44 @@
       { key: 'csv', label: 'CSV 載入失敗', target: 'self' },
     ];
 
+    // 資料源切換（Google Sheet 模擬）
+    const currentSource = params.get('source') || '';
+    const sourceStates = [
+      { key: '', label: '本地 CSV（GitHub）' },
+      { key: 'sheet', label: 'Google Sheet（模擬）' },
+    ];
+
+    function buildErrorUrl(s) {
+      const targetPath = s.target === 'self' ? path : s.target;
+      const next = new URLSearchParams();
+      if (s.key) next.set('simulate', s.key);
+      if (currentSource) next.set('source', currentSource);
+      const qs = next.toString();
+      return qs ? `${targetPath}?${qs}` : targetPath;
+    }
+    function buildSourceUrl(s) {
+      const next = new URLSearchParams();
+      if (currentSim) next.set('simulate', currentSim);
+      if (s.key) next.set('source', s.key);
+      const qs = next.toString();
+      return qs ? `${path}?${qs}` : path;
+    }
+
     const wrapper = document.createElement('div');
     wrapper.className = 'demo-switcher';
     wrapper.innerHTML = `
-      <button class="demo-switcher__toggle" aria-label="Demo 模式切換">⚙</button>
+      <button class="demo-switcher__toggle" aria-label="Demo 模式切換">Demo</button>
       <div class="demo-switcher__panel">
-        <div class="demo-switcher__title">Demo 模式（測試用）</div>
+        <div class="demo-switcher__title">錯誤狀態</div>
         <ul class="demo-switcher__list">
-          ${states.map(s => {
-            const isActive = s.key === currentSim;
-            const targetPath = s.target === 'self' ? path : s.target;
-            const url = s.key ? `${targetPath}?simulate=${s.key}` : targetPath;
-            return `<li><a href="${url}" data-active="${isActive}">${s.label}</a></li>`;
-          }).join('')}
-          <li style="margin-top:8px;border-top:1px solid #eee;padding-top:8px;">
-            <a href="404.html">查看 404 頁</a>
-          </li>
+          ${errorStates.map(s => `<li><a href="${buildErrorUrl(s)}" data-active="${s.key === currentSim}">${s.label}</a></li>`).join('')}
+        </ul>
+        <div class="demo-switcher__title" style="margin-top:12px;">資料來源</div>
+        <ul class="demo-switcher__list">
+          ${sourceStates.map(s => `<li><a href="${buildSourceUrl(s)}" data-active="${s.key === currentSource}">${s.label}</a></li>`).join('')}
+        </ul>
+        <ul class="demo-switcher__list" style="margin-top:12px;border-top:1px solid #eee;padding-top:8px;">
+          <li><a href="404.html">查看 404 頁</a></li>
           <li><a href="error.html?reason=csv">查看錯誤頁</a></li>
         </ul>
       </div>
