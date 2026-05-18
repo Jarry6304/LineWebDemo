@@ -81,13 +81,7 @@ LINE 圖文選單
 
 本專案使用 GitHub Actions 部署到 GitHub Pages。每次 push 到 `main` 分支即自動上線。
 
-### 一次性啟用步驟（repo owner 操作一次即可）
-
-1. 進入 repo 的 **Settings** → **Pages**
-2. **Source** 選 **GitHub Actions**
-3. 儲存
-
-之後每次 push 到 `main`：
+Workflow 已設定 `enablement: true`，第一次跑時會自動啟用 Pages，不需要去 Settings 手動開（前提：repo 是 public）。
 
 ```
 push to main
