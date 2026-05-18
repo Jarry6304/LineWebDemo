@@ -77,6 +77,43 @@ LINE 圖文選單
 
 改完後重新部署即可，**不需要動到任何 HTML/CSS/JS**。
 
+## 部署（GitHub Pages 自動部署）
+
+本專案使用 GitHub Actions 部署到 GitHub Pages。每次 push 到 `main` 分支即自動上線。
+
+### 一次性啟用步驟（repo owner 操作一次即可）
+
+1. 進入 repo 的 **Settings** → **Pages**
+2. **Source** 選 **GitHub Actions**
+3. 儲存
+
+之後每次 push 到 `main`：
+
+```
+push to main
+  ↓
+.github/workflows/deploy.yml 觸發
+  ↓
+1–2 分鐘後網站更新
+  ↓
+https://jarry6304.github.io/LineWebDemo/
+```
+
+### 朋友維護流程（瀏覽器內完成）
+
+朋友只需要在 GitHub 網頁上編輯 `data/*.csv` → commit → 自動部署：
+
+1. 在 GitHub repo 找到要改的 CSV（例：`data/classes.csv`）
+2. 點右上鉛筆 icon 編輯
+3. 改完底下寫 commit message → **Commit changes**
+4. 等 1–2 分鐘，網站自動更新
+
+完全不需要 git 或命令列。
+
+### 手動觸發部署
+
+在 repo Actions tab → "Deploy to GitHub Pages" → **Run workflow** 可立即重 deploy。
+
 ## 範圍
 
 這是 demo，**未接真實後端**：
