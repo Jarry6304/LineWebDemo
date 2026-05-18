@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>報名已送出｜虎甲自然 2026</title>
+  <meta name="description" content="您的報名已成功送出，我們將盡快與您聯繫。">
+  <meta name="robots" content="noindex">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500&display=swap">
+  <link rel="stylesheet" href="assets/css/main.css">
+</head>
+<body>
+  <main class="container">
+    <section class="section text-center">
+      <div class="success-icon" aria-hidden="true">✓</div>
+      <h1>報名已送出</h1>
+      <p class="muted" style="margin-bottom:32px;">感謝您報名虎甲自然 2026 年度課程</p>
+
+      <div class="card stack" style="text-align:left;max-width:500px;margin:0 auto;">
+        <div>
+          <div class="caption">報名編號</div>
+          <div style="font-size:22px;font-weight:500;color:var(--c-primary)" data-rid>—</div>
+        </div>
+        <div data-summary>
+          <div class="skeleton skeleton-card" style="height:80px"></div>
+        </div>
+      </div>
+
+      <div class="alert alert--info" style="text-align:left;max-width:500px;margin:32px auto 0;">
+        <span class="alert__icon">📋</span>
+        <div class="alert__body">
+          <div class="alert__title">後續流程</div>
+          <p style="margin:0;">我們會於 3 個工作天內由 LINE 一對一聯繫您，請您提供保險投保所需的身分證字號，並完成繳費確認手續。</p>
+        </div>
+      </div>
+
+      <div class="hero__cta" style="margin-top:32px;">
+        <a href="#" id="line-cta" class="btn btn--accent btn--lg">加 LINE 諮詢</a>
+        <a href="index.html" class="btn btn--secondary btn--lg">回首頁</a>
+      </div>
+    </section>
+  </main>
+
+  <script src="assets/js/csv.js"></script>
+  <script src="assets/js/shared.js"></script>
+  <script>
+    (async function(){
+      try {
+        const configRows = await TBCSV.loadCSV('data/config.csv');
+        const config = {};
+        configRows.forEach(r => { config[r.key] = r.value; });
+        TB.injectHeader(config);
+        TB.injectFooter(config);
+
+        const lineCta = document.getElementById('line-cta');
+        if (lineCta && config.line_oa_url) {
+          lineCta.href = config.line_oa_url;
+          lineCta.target = '_blank';
+        }
+
+        // 從 query 還原報名摘要
+        const params = new URLSearchParams(location.search);
+        const rid = params.get('rid') || 'TB' + Date.now().toString(36).toUpperCase();
+        const className = params.get('class') || '—';
+        const studentName = params.get('student') || '—';
+        const total = params.get('total') || '—';
+
+        document.querySelector('[data-rid]').textContent = rid;
+        document.querySelector('[data-summary]').innerHTML = `
+          <div style="display:grid;grid-template-columns:auto 1fr;gap:8px 16px;font-size:16px;">
+            <span class="muted">班級</span><span>${TB.escapeHTML(className)}</span>
+            <span class="muted">學員</span><span>${TB.escapeHTML(studentName)}</span>
+            <span class="muted">應繳金額</span><span style="font-weight:500;color:var(--c-primary)">${total === '—' ? '—' : TB.formatPrice(total)}</span>
+          </div>
+        `;
+
+        TB.injectDemoSwitcher();
+      } catch (err) {
+        // success 頁就算 CSV 失敗也要顯示成功，不阻擋
+        TB.injectHeader({});
+        TB.injectFooter({});
+        TB.injectDemoSwitcher();
+      }
+    })();
+  </script>
+</body>
+</html>

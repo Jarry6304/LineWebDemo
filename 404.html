@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>找不到頁面｜虎甲自然 2026</title>
+  <meta name="robots" content="noindex">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500&display=swap">
+  <link rel="stylesheet" href="assets/css/main.css">
+</head>
+<body>
+  <main class="error-page">
+    <div class="error-page__code">404</div>
+    <h1 class="error-page__title">找不到這個頁面</h1>
+    <p class="error-page__hint">您要找的頁面可能已搬移或被刪除。歡迎回到首頁，或加入 LINE 詢問我們。</p>
+    <div class="error-page__actions">
+      <a href="index.html" class="btn btn--primary btn--lg btn--block">回到首頁</a>
+      <a id="line-cta" href="https://lin.ee/TPOEska" target="_blank" rel="noopener" class="btn btn--secondary btn--lg btn--block">加 LINE 諮詢</a>
+    </div>
+  </main>
+
+  <script src="assets/js/csv.js"></script>
+  <script src="assets/js/shared.js"></script>
+  <script>
+    (async function(){
+      try {
+        const rows = await TBCSV.loadCSV('data/config.csv');
+        const config = {};
+        rows.forEach(r => config[r.key] = r.value);
+        TB.injectHeader(config);
+        TB.injectFooter(config);
+        const lineCta = document.getElementById('line-cta');
+        if (config.line_oa_url) lineCta.href = config.line_oa_url;
+      } catch {
+        TB.injectHeader({});
+        TB.injectFooter({});
+      }
+      TB.injectDemoSwitcher();
+    })();
+  </script>
+</body>
+</html>
