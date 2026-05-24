@@ -57,31 +57,6 @@
       </div>
     `;
     document.body.insertBefore(header, document.body.firstChild);
-    injectSourceBar();
-  }
-
-  // 資料來源狀態列（顯示在 header 下方，demo 用）
-  function injectSourceBar() {
-    if (!global.TBCSV) return;
-    const isSheet = global.TBCSV.sheetMode();
-    const bar = document.createElement('div');
-    bar.style.cssText = [
-      'position:sticky',
-      'top:var(--header-h)',
-      'z-index:30',
-      'padding:8px 24px',
-      'text-align:center',
-      'font-size:14px',
-      'font-weight:500',
-      'border-bottom:1px solid var(--c-border)',
-      isSheet ? 'background:rgba(66,133,244,0.08); color:#1a73e8' : 'background:rgba(45,95,63,0.05); color:var(--c-primary)',
-    ].join(';');
-    bar.setAttribute('data-source-bar', '');
-    bar.innerHTML = isSheet
-      ? '資料源：Google Sheet（模擬）— 朋友改 Sheet 即時反映，不需重新部署'
-      : '資料源：本地 CSV — 朋友改檔 push 後 1–2 分鐘重新部署';
-    const header = document.querySelector('.site-header');
-    if (header) header.insertAdjacentElement('afterend', bar);
   }
 
   // ============================================================
@@ -244,27 +219,12 @@
       { key: 'csv', label: 'CSV 載入失敗', target: 'self' },
     ];
 
-    // 資料源切換（Google Sheet 模擬）
-    const currentSource = params.get('source') || '';
-    const sourceStates = [
-      { key: '', label: '本地 CSV（GitHub）' },
-      { key: 'sheet', label: 'Google Sheet（模擬）' },
-    ];
-
     function buildErrorUrl(s) {
       const targetPath = s.target === 'self' ? path : s.target;
       const next = new URLSearchParams();
       if (s.key) next.set('simulate', s.key);
-      if (currentSource) next.set('source', currentSource);
       const qs = next.toString();
       return qs ? `${targetPath}?${qs}` : targetPath;
-    }
-    function buildSourceUrl(s) {
-      const next = new URLSearchParams();
-      if (currentSim) next.set('simulate', currentSim);
-      if (s.key) next.set('source', s.key);
-      const qs = next.toString();
-      return qs ? `${path}?${qs}` : path;
     }
 
     const wrapper = document.createElement('div');
@@ -275,10 +235,6 @@
         <div class="demo-switcher__title">錯誤狀態</div>
         <ul class="demo-switcher__list">
           ${errorStates.map(s => `<li><a href="${buildErrorUrl(s)}" data-active="${s.key === currentSim}">${s.label}</a></li>`).join('')}
-        </ul>
-        <div class="demo-switcher__title" style="margin-top:12px;">資料來源</div>
-        <ul class="demo-switcher__list">
-          ${sourceStates.map(s => `<li><a href="${buildSourceUrl(s)}" data-active="${s.key === currentSource}">${s.label}</a></li>`).join('')}
         </ul>
         <ul class="demo-switcher__list" style="margin-top:12px;border-top:1px solid #eee;padding-top:8px;">
           <li><a href="404.html">查看 404 頁</a></li>
