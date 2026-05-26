@@ -6,11 +6,9 @@
     const data = await TBCSV.loadAll();
     TB.injectHeader(data.config);
     TB.injectFooter(data.config);
-    TB.injectEarlyBirdBanner(data.config);
 
     renderFAQ(data.faqs);
     bindContacts(data.config);
-    TB.injectDemoSwitcher();
 
     // 處理 hash 跳轉（避開 sticky header）
     if (location.hash) {
@@ -49,7 +47,6 @@
   }
 
   function formatAnswer(text) {
-    // 將 CSV 裡的 \n 轉成換行
     return TB.escapeHTML(text).replace(/\\n/g, '\n');
   }
 
@@ -80,22 +77,6 @@
     const pdfCard = document.getElementById('pdf-card');
     if (pdfCard && config.pdf_url) {
       pdfCard.href = config.pdf_url;
-    }
-
-    // 說明會資訊
-    const briefingBox = document.querySelector('[data-briefing]');
-    if (briefingBox && config.briefing_date) {
-      const dt = config.briefing_date;
-      const expired = TB.isExpired(dt.split(' ')[0]);
-      if (expired) {
-        briefingBox.innerHTML = '<p class="muted">本期說明會已結束，請加 LINE 諮詢以了解最新場次。</p>';
-      } else {
-        briefingBox.innerHTML = `
-          <p style="font-size:18px;">${TB.escapeHTML(dt)}</p>
-          <p>於 Google Meet 進行，會議連結將於前三日發布於官方 LINE。</p>
-          <p class="muted small">內容：課程理念介紹、行前安全教育、問答環節</p>
-        `;
-      }
     }
   }
 })();

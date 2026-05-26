@@ -31,14 +31,10 @@
       if (reason === 'csv') {
         titleEl.textContent = '資料載入發生問題';
         hintEl.textContent = '網站內容暫時無法載入，可能是維護中或網路波動。請稍後重新整理，或加 LINE 詢問。';
-      } else if (reason === 'simulated') {
-        titleEl.textContent = '（Demo）資料載入失敗示範';
-        hintEl.textContent = '這是觸發 ?simulate=csv 的測試畫面。實際情境下，CSV 載入失敗會跳轉到這裡。';
       }
       // 不依賴 CSV 載入，避免錯誤頁再失敗
       TB.injectHeader({});
       TB.injectFooter({});
-      TB.injectDemoSwitcher();
     })();
   </script>
 </body>

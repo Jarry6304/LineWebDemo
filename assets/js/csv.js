@@ -44,10 +44,6 @@
   }
 
   async function loadCSV(path) {
-    const params = new URLSearchParams(global.location.search);
-    if (params.get('simulate') === 'csv') {
-      throw new Error('Simulated CSV load failure');
-    }
     const res = await fetch(path, { cache: 'no-store' });
     if (!res.ok) throw new Error(`Failed to load ${path}: ${res.status}`);
     const text = await res.text();
@@ -73,8 +69,7 @@
 
   function handleLoadError(err) {
     console.error('[CSV Load Error]', err);
-    const reason = err && err.message && err.message.includes('Simulated') ? 'simulated' : 'csv';
-    global.location.href = 'error.html?reason=' + reason;
+    global.location.href = 'error.html?reason=csv';
   }
 
   global.TBCSV = {

@@ -153,6 +153,24 @@ p { margin: 0 0 var(--sp-md); }
   width: 32px;
   height: 32px;
 }
+.site-header__nav {
+  display: none;
+  align-items: center;
+  gap: var(--sp-lg);
+  font-size: var(--fs-small);
+}
+.site-header__nav a {
+  color: var(--c-text);
+  text-decoration: none;
+  font-weight: 500;
+}
+.site-header__nav a:hover {
+  color: var(--c-primary);
+  text-decoration: none;
+}
+@media (min-width: 768px) {
+  .site-header__nav { display: flex; }
+}
 .site-header__back {
   font-size: var(--fs-small);
   padding: 8px 16px;
@@ -283,57 +301,11 @@ p { margin: 0 0 var(--sp-md); }
 .badge--danger { background: rgba(192, 57, 43, 0.12); color: var(--c-danger); }
 
 /* ============================================================
-   Banner (早鳥/說明會)
-   ============================================================ */
-.banner {
-  position: relative;
-  background: #F5EBC9;
-  color: #6B4423;
-  padding: var(--sp-md) var(--sp-lg);
-  border-radius: var(--r-card);
-  font-size: var(--fs-small);
-  display: flex;
-  align-items: center;
-  gap: var(--sp-sm);
-}
-.banner__close {
-  margin-left: auto;
-  background: none;
-  border: 0;
-  font-size: 20px;
-  line-height: 1;
-  color: inherit;
-  padding: 4px 8px;
-  opacity: 0.6;
-}
-.banner__close:hover { opacity: 1; }
-.banner__action {
-  margin-left: var(--sp-sm);
-  text-decoration: underline;
-  cursor: pointer;
-  background: none;
-  border: 0;
-  color: inherit;
-  font-size: inherit;
-  font-family: inherit;
-}
-
-/* ============================================================
    Hero
    ============================================================ */
 .hero {
   padding: var(--sp-section) 0 calc(var(--sp-section) / 1.5);
   text-align: center;
-}
-.hero__eyebrow {
-  display: inline-block;
-  padding: 6px 16px;
-  background: var(--c-accent);
-  color: var(--c-primary-dark);
-  border-radius: var(--r-pill);
-  font-size: var(--fs-small);
-  font-weight: 500;
-  margin-bottom: var(--sp-lg);
 }
 .hero__title {
   font-size: var(--fs-hero);
@@ -549,11 +521,6 @@ body.modal-open { overflow: hidden; }
   margin: 0;
   line-height: 1.7;
 }
-.class-card--disabled {
-  opacity: 0.6;
-  background: #f5f1e8;
-}
-
 /* ============================================================
    Modal 詳情內容
    ============================================================ */
@@ -757,183 +724,6 @@ body.modal-open { overflow: hidden; }
 .calendar__class { color: var(--c-text-muted); }
 
 /* ============================================================
-   Form (報名表)
-   ============================================================ */
-.form-progress {
-  display: flex;
-  align-items: center;
-  gap: var(--sp-sm);
-  margin-bottom: var(--sp-xl);
-}
-.form-progress__bar {
-  flex: 1;
-  height: 4px;
-  background: var(--c-border);
-  border-radius: 2px;
-  overflow: hidden;
-}
-.form-progress__fill {
-  height: 100%;
-  background: var(--c-accent);
-  border-radius: 2px;
-  transition: width 300ms;
-}
-.form-progress__label {
-  font-size: var(--fs-caption);
-  color: var(--c-text-muted);
-  white-space: nowrap;
-}
-.form-step {
-  display: none;
-}
-.form-step[data-active="true"] {
-  display: block;
-  animation: slideIn 200ms ease-out;
-}
-@keyframes slideIn {
-  from { opacity: 0; transform: translateX(8px); }
-  to { opacity: 1; transform: translateX(0); }
-}
-.form-step__title {
-  margin-bottom: var(--sp-sm);
-}
-.form-step__hint {
-  color: var(--c-text-muted);
-  margin-bottom: var(--sp-xl);
-  font-size: var(--fs-small);
-}
-.field {
-  margin-bottom: var(--sp-lg);
-}
-.field__label {
-  display: block;
-  font-weight: 500;
-  margin-bottom: var(--sp-xs);
-  color: var(--c-text);
-}
-.field__label .required {
-  color: var(--c-danger);
-  margin-left: 2px;
-}
-.field__input,
-.field__select,
-.field__textarea {
-  width: 100%;
-  padding: var(--sp-md) var(--sp-md);
-  border: 1.5px solid var(--c-border);
-  border-radius: var(--r-btn);
-  background: var(--c-card);
-  font-size: var(--fs-body);
-  color: var(--c-text);
-  transition: border-color 200ms;
-  font-family: inherit;
-}
-.field__textarea { min-height: 100px; resize: vertical; }
-.field__input:focus,
-.field__select:focus,
-.field__textarea:focus {
-  outline: none;
-  border-color: var(--c-primary);
-}
-.field__hint {
-  margin-top: var(--sp-xs);
-  font-size: var(--fs-caption);
-  color: var(--c-text-muted);
-}
-.field__error {
-  display: none;
-  margin-top: var(--sp-xs);
-  font-size: var(--fs-caption);
-  color: var(--c-danger);
-}
-.field--invalid .field__input,
-.field--invalid .field__select,
-.field--invalid .field__textarea {
-  border-color: var(--c-danger);
-}
-.field--invalid .field__error { display: block; }
-.radio-group, .checkbox-group {
-  display: flex;
-  flex-direction: column;
-  gap: var(--sp-sm);
-}
-.radio-group--inline {
-  flex-direction: row;
-  flex-wrap: wrap;
-  gap: var(--sp-md);
-}
-.radio, .checkbox {
-  display: flex;
-  align-items: flex-start;
-  gap: var(--sp-sm);
-  cursor: pointer;
-  font-size: var(--fs-body);
-  line-height: 1.6;
-}
-.radio input, .checkbox input {
-  margin-top: 4px;
-  width: 20px;
-  height: 20px;
-  accent-color: var(--c-primary);
-}
-.form-nav {
-  display: flex;
-  gap: var(--sp-md);
-  margin-top: var(--sp-xl);
-}
-.form-nav .btn { flex: 1; }
-.form-summary {
-  background: rgba(164, 199, 99, 0.12);
-  border-radius: var(--r-card);
-  padding: var(--sp-lg);
-  margin: var(--sp-lg) 0;
-}
-.form-summary__row {
-  display: flex;
-  justify-content: space-between;
-  padding: var(--sp-xs) 0;
-}
-.form-summary__row--total {
-  font-size: var(--fs-h3);
-  font-weight: 500;
-  color: var(--c-primary);
-  padding-top: var(--sp-md);
-  border-top: 1px solid var(--c-border);
-  margin-top: var(--sp-sm);
-}
-.price-original {
-  text-decoration: line-through;
-  color: var(--c-text-muted);
-  margin-right: var(--sp-sm);
-  font-size: var(--fs-small);
-}
-.discount-tag {
-  font-size: var(--fs-caption);
-  color: var(--c-warning);
-  margin-left: var(--sp-sm);
-}
-
-/* ============================================================
-   Alert / Error panels
-   ============================================================ */
-.alert {
-  padding: var(--sp-lg);
-  border-radius: var(--r-card);
-  margin-bottom: var(--sp-lg);
-  font-size: var(--fs-small);
-  line-height: 1.7;
-  display: flex;
-  gap: var(--sp-md);
-  align-items: flex-start;
-}
-.alert__body { flex: 1; }
-.alert__title { font-size: 20px; font-weight: 500; margin-bottom: var(--sp-xs); }
-.alert--error { background: rgba(192, 57, 43, 0.08); color: var(--c-danger); }
-.alert--warning { background: rgba(184, 92, 56, 0.1); color: var(--c-warning); }
-.alert--info { background: rgba(45, 95, 63, 0.08); color: var(--c-primary); }
-.alert--success { background: rgba(45, 134, 89, 0.1); color: var(--c-success); }
-
-/* ============================================================
    Loading / Skeleton
    ============================================================ */
 .skeleton {
@@ -960,84 +750,6 @@ body.modal-open { overflow: hidden; }
   animation: spin 700ms linear infinite;
 }
 @keyframes spin { to { transform: rotate(360deg); } }
-
-/* ============================================================
-   Success page
-   ============================================================ */
-.success-headline {
-  margin: 0 auto var(--sp-xl);
-  padding: var(--sp-xl);
-  text-align: center;
-  background: var(--c-accent);
-  color: var(--c-primary-dark);
-  border-radius: var(--r-card);
-  font-size: 28px;
-  font-weight: 500;
-  letter-spacing: 0.05em;
-  max-width: 500px;
-}
-
-/* ============================================================
-   Demo Switcher (debug)
-   ============================================================ */
-.demo-switcher {
-  position: fixed;
-  bottom: 20px;
-  right: 20px;
-  z-index: 90;
-}
-.demo-switcher__toggle {
-  min-width: 72px;
-  height: 44px;
-  padding: 0 16px;
-  border-radius: 22px;
-  background: var(--c-primary);
-  color: #fff;
-  border: 0;
-  font-size: 15px;
-  font-weight: 500;
-  box-shadow: var(--sh-card-hover);
-}
-.demo-switcher__panel {
-  position: absolute;
-  bottom: 56px;
-  right: 0;
-  background: var(--c-card);
-  border-radius: var(--r-card);
-  padding: var(--sp-md);
-  box-shadow: var(--sh-modal);
-  width: 240px;
-  display: none;
-}
-.demo-switcher[data-open="true"] .demo-switcher__panel { display: block; }
-.demo-switcher__title {
-  font-size: var(--fs-small);
-  font-weight: 500;
-  color: var(--c-primary);
-  margin-bottom: var(--sp-sm);
-}
-.demo-switcher__list {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-  font-size: var(--fs-caption);
-}
-.demo-switcher__list a {
-  display: block;
-  padding: 6px 8px;
-  border-radius: 6px;
-  color: var(--c-text);
-  text-decoration: none;
-}
-.demo-switcher__list a:hover {
-  background: rgba(45, 95, 63, 0.08);
-  text-decoration: none;
-}
-.demo-switcher__list a[data-active="true"] {
-  background: var(--c-accent);
-  color: var(--c-primary-dark);
-  font-weight: 500;
-}
 
 /* ============================================================
    Refund table

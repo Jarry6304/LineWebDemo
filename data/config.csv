@@ -1,13 +1,5 @@
 key,value,note
-current_term,2026 夏秋季第一期,招生期數
-early_bird_deadline,2026-06-30,早鳥截止日 (YYYY-MM-DD)
-early_bird_discount,0.05,早鳥折扣比例
-briefing_date,2026-06-21 19:00,線上說明會時間
-briefing_url,https://meet.google.com/abc-defg-hij,說明會 Google Meet 連結（demo 用）
 line_oa_url,https://lin.ee/TPOEska,LINE 加入連結
 line_oa_id,@821lvzed,LINE 官方帳號 ID
 contact_email,bill541328@tbnature.com.tw,聯絡信箱
 pdf_url,assets/tiger-beetle-2026.pdf,簡章下載路徑
-apps_script_url,,Apps Script 端點（demo 留空）
-sheet_id,,Google Sheet ID（demo 留空）
-show_briefing_banner,true,是否顯示說明會橫幅
