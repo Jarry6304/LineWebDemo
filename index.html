@@ -20,99 +20,58 @@
   <main>
     <!-- Hero -->
     <section class="hero container">
-      <h1 class="hero__title">城市與自然的<br>引路者</h1>
-      <p class="hero__subtitle">陪孩子走進步道，<br>成為大自然的學生</p>
+      <h1 class="hero__title" data-cfg-ml="home_hero_title">城市與自然的<br>引路者</h1>
+      <p class="hero__subtitle" data-cfg-ml="home_hero_subtitle">陪孩子走進步道，<br>成為大自然的學生</p>
       <div class="hero__cta">
-        <a href="courses.html" class="btn btn--primary btn--lg">看課程介紹</a>
-        <a id="line-cta" href="#" target="_blank" rel="noopener" class="btn btn--accent btn--lg">加 LINE 諮詢</a>
+        <a href="courses.html" class="btn btn--primary btn--lg" data-cfg="home_hero_courses_btn">看課程介紹</a>
+        <a id="line-cta" href="#" target="_blank" rel="noopener" class="btn btn--accent btn--lg" data-cfg="home_hero_line_btn">加 LINE 諮詢</a>
       </div>
     </section>
 
-    <!-- 品牌故事（短引言 + 點開展開） -->
+    <!-- 品牌故事 -->
     <section class="section container">
       <div class="section-heading">
-        <h2>關於虎甲自然</h2>
-        <p>城市與自然之間，需要一位引路者</p>
+        <h2 data-cfg="home_about_heading">關於虎甲自然</h2>
+        <p data-cfg="home_about_subtitle">城市與自然之間，需要一位引路者</p>
       </div>
-      <div class="card stack">
-        <p style="font-size:20px;line-height:1.8;">
-          這座島嶼從海平面到 4000 公尺，氣候多元、生態豐富。我們生活在城市裡，
-          抬頭就看見遠方山稜線，卻對山裡的人們與森林中的生命所知不多。
-        </p>
-        <p style="color:var(--c-text-muted);">
-          我們希望像虎甲蟲一樣，在自然與城市之間，成為「引路者」。
-        </p>
-        <details class="disclosure">
-          <summary>閱讀完整故事</summary>
-          <div class="disclosure__body">
-            <p>虎甲蟲（Tiger Beetle）是一種經常可以在步道上觀察到的昆蟲。牠時常隨著我們腳步走近，便往前飛躍一小段；週而復始，彷彿帶著我們在這條路上前進。</p>
-            <p>這座面積僅 3 萬 6 千平方公里的島嶼——臺灣——是我們長大的地方。她被山林環抱，在極短的距離裡，從海平面攀升到將近 4000 公尺，讓她成為生物多樣性極為豐富的自然寶庫。</p>
-            <p>近年來，伴隨山林開放政策與商業登山活絡，大幅度降低了人們接近山林的成本，但各種山難、步道耗損與環境衝擊，不斷提醒我們：不能只做單方面的環境消費者。</p>
-            <p>在虎甲自然的帶領下，登山不只是攻頂看大景：透過自然觀察與戶外探索，我們結合「山野教育」與「環境教育」，在走進步道的過程，認識山上的植物、昆蟲，爬梳歷史、尋找人文痕跡。</p>
-            <p style="color:var(--c-primary);font-weight:500;">山是一座無垠的教室，步道是通往教室的走廊，請跟著我們一同成為大自然的學生。</p>
-          </div>
-        </details>
+      <div class="card stack" data-about>
+        <div class="skeleton skeleton-card"></div>
+        <div class="skeleton skeleton-card"></div>
       </div>
     </section>
 
     <!-- 三大系列預覽 -->
     <section class="section container">
       <div class="section-heading">
-        <h2>三大課程系列</h2>
-        <p>選擇適合孩子的節奏</p>
+        <h2 data-cfg="home_series_heading">三大課程系列</h2>
+        <p data-cfg="home_series_subtitle">選擇適合孩子的節奏</p>
       </div>
-      <div class="series-grid">
-        <a href="courses.html#mountain" class="series-card">
-          <h3 class="series-card__title">山野成長系列</h3>
-          <p class="series-card__desc">戶外自主行動。每月一次，五個月為一期。</p>
-          <span class="series-card__arrow">看班級 →</span>
-        </a>
-        <a href="courses.html#nature" class="series-card">
-          <h3 class="series-card__title">自然探索系列</h3>
-          <p class="series-card__desc">親子自然共學。兩月一次，六個月為一期。</p>
-          <span class="series-card__arrow">看班級 →</span>
-        </a>
-        <a href="courses.html#field" class="series-card">
-          <h3 class="series-card__title">原野觀察教室</h3>
-          <p class="series-card__desc">森林修補紀實。主題探究與公民科學。</p>
-          <span class="series-card__arrow">看班級 →</span>
-        </a>
+      <div class="series-grid" data-series-preview>
+        <div class="skeleton skeleton-card"></div>
+        <div class="skeleton skeleton-card"></div>
+        <div class="skeleton skeleton-card"></div>
       </div>
     </section>
 
-    <!-- 四核心關鍵字（點擊展開說明） -->
+    <!-- 四核心關鍵字 -->
     <section class="section container">
       <div class="section-heading">
-        <h2>我們重視什麼</h2>
-        <p>點擊看更多</p>
+        <h2 data-cfg="home_keywords_heading">我們重視什麼</h2>
+        <p data-cfg="home_keywords_subtitle">點擊看更多</p>
       </div>
-      <div class="keyword-grid">
-        <button class="keyword" type="button" aria-expanded="false">
-          <span class="keyword__name">自然觀察</span>
-          <span class="keyword__desc">辨識植物、昆蟲，理解山林裡的生命網絡</span>
-        </button>
-        <button class="keyword" type="button" aria-expanded="false">
-          <span class="keyword__name">人文歷史</span>
-          <span class="keyword__desc">尋找步道上的歷史痕跡，理解人與土地的關係</span>
-        </button>
-        <button class="keyword" type="button" aria-expanded="false">
-          <span class="keyword__name">登山技能</span>
-          <span class="keyword__desc">裝備、體能、路線判讀，建立自主行動能力</span>
-        </button>
-        <button class="keyword" type="button" aria-expanded="false">
-          <span class="keyword__name">風險意識</span>
-          <span class="keyword__desc">天氣、地形、時間判斷，從小培養安全意識</span>
-        </button>
+      <div class="keyword-grid" data-keywords>
+        <div class="skeleton skeleton-card"></div>
+        <div class="skeleton skeleton-card"></div>
       </div>
     </section>
 
     <!-- 底部 CTA -->
     <section class="section text-center container">
-      <h2>想了解更多？</h2>
-      <p class="muted" style="margin-bottom:32px;">查看常見問題，或下載完整簡章認識虎甲自然。</p>
+      <h2 data-cfg="home_cta_heading">想了解更多？</h2>
+      <p class="muted" style="margin-bottom:32px;" data-cfg="home_cta_text">查看常見問題，或下載完整簡章認識虎甲自然。</p>
       <div class="hero__cta">
-        <a href="info.html" class="btn btn--secondary btn--lg">相關問題</a>
-        <a href="info.html#download" class="btn btn--secondary btn--lg">下載簡章</a>
+        <a href="info.html" class="btn btn--secondary btn--lg" data-cfg="home_cta_faq_btn">相關問題</a>
+        <a href="info.html#download" class="btn btn--secondary btn--lg" data-cfg="home_cta_download_btn">下載簡章</a>
       </div>
     </section>
   </main>
@@ -120,30 +79,6 @@
   <script src="assets/js/site-config.js"></script>
   <script src="assets/js/csv.js"></script>
   <script src="assets/js/shared.js"></script>
-  <script>
-    (async function(){
-      try {
-        const data = await TBCSV.loadAll();
-        TB.injectHeader(data.config);
-        TB.injectFooter(data.config);
-
-        // LINE CTA
-        if (data.config.line_oa_url) {
-          const line = document.getElementById('line-cta');
-          if (line) line.href = data.config.line_oa_url;
-        }
-
-        // 四宮格點擊展開
-        document.querySelectorAll('.keyword').forEach(btn => {
-          btn.addEventListener('click', () => {
-            const expanded = btn.getAttribute('aria-expanded') === 'true';
-            btn.setAttribute('aria-expanded', expanded ? 'false' : 'true');
-          });
-        });
-      } catch (err) {
-        TBCSV.handleLoadError(err);
-      }
-    })();
-  </script>
+  <script src="assets/js/home.js"></script>
 </body>
 </html>
