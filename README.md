@@ -155,7 +155,7 @@ python3 scripts/build_site_xlsx.py
 │   │   ├── shared.js        Header / Footer / Modal
 │   │   ├── courses.js       課程頁邏輯
 │   │   └── info.js          相關問題頁邏輯
-│   ├── img/                 logo-mark / logo-full / logo-text / favicon
+│   ├── img/                 logo-mark（header）/ logo-text（保留備用）/ favicon
 │   └── tiger-beetle-2026.pdf
 ├── data/
 │   ├── site.xlsx            ★ 上傳到 Google Sheets 的模板
@@ -176,3 +176,20 @@ python3 scripts/build_site_xlsx.py
 ```
 https://jarry6304.github.io/LineWebDemo/
 ```
+
+---
+
+## 設計系統摘要
+
+色彩 token 集中於 `assets/css/main.css` 開頭的 `:root`。三組色相搭配自然品牌：
+
+| 色相 | Token | 用途 |
+|---|---|---|
+| 森林綠（主） | `--c-primary` / `--c-primary-dark` / `--c-primary-light` / `--c-accent` | Hero 標題、CTA、accent 徽章 |
+| 大地棕（副） | `--c-earth` / `--c-earth-dark` / `--c-earth-light` / `--c-cream` | 區域標籤、FAQ 分類、卡片頂緣 |
+| 泥土深棕（footer） | `--c-soil` (#3D2E1F) | 網頁底部 footer 背景，視覺上代表地面 |
+
+**Footer 互補配色：** 深土棕背景 + 暖米文字 + 嫩葉綠連結。lime green 是 soil brown 的 split-complementary，對應「土壤孕育植物」意象，比正互補（冷藍）更符合自然品牌。
+
+**字體：** Noto Sans TC（Google Fonts，`font-display: swap`）— 統一全站。
+

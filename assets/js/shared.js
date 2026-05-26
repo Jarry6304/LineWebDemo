@@ -44,7 +44,7 @@
       <div class="site-header__inner">
         <a href="index.html" class="site-header__logo">
           <img src="assets/img/logo-mark.png" alt="" class="site-header__logo-mark">
-          <span class="site-header__logo-text brand-text">虎甲自然</span>
+          <span class="site-header__logo-text">虎甲自然</span>
         </a>
         <nav class="site-header__nav">
           <a href="index.html">企業概述</a>
