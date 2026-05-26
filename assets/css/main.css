@@ -23,6 +23,7 @@
   --c-earth-dark:     #5C4733;   /* 深土褐 - 標題、強調 */
   --c-earth-light:    #D9C7A8;   /* 沙米黃 - 淺色區塊 */
   --c-cream:          #F5EBC9;   /* 羊皮米 - 強調背景 */
+  --c-soil:           #3D2E1F;   /* 泥土深棕 - footer 背景，代表地面 */
 
   /* 中性 */
   --c-bg:             #FAF6EC;   /* 暖米背景 */
@@ -121,12 +122,6 @@ p { margin: 0 0 var(--sp-md); }
 .caption { font-size: var(--fs-caption); color: var(--c-text-muted); }
 .muted { color: var(--c-text-muted); }
 
-/* 品牌書法字體（用於「虎甲自然」品牌字樣） */
-.brand-text {
-  font-family: 'Ma Shan Zheng', 'Noto Serif TC', 'Noto Sans TC', cursive, serif;
-  font-weight: 400;
-}
-
 /* ============================================================
    Layout
    ============================================================ */
@@ -220,12 +215,22 @@ p { margin: 0 0 var(--sp-md); }
    Footer
    ============================================================ */
 .site-footer {
-  background: var(--c-primary);
-  color: #fff;
+  /* 泥土層意象：底色深土棕 + 暖米文字 + 嫩葉綠連結
+     色彩學：lime green (#A4C763) 是 soil brown 的 split-complementary，
+     對應「土壤孕育植物」的意象，比正互補（冷藍）更符合自然品牌 */
+  background: var(--c-soil);
+  color: var(--c-cream);
   padding: var(--sp-xl) 0;
   margin-top: var(--sp-section);
 }
-.site-footer a { color: var(--c-accent); }
+.site-footer a {
+  color: var(--c-accent);
+  text-decoration: none;
+}
+.site-footer a:hover {
+  color: #C5DD86;
+  text-decoration: underline;
+}
 .site-footer__inner {
   max-width: var(--container-max);
   margin: 0 auto;
@@ -241,10 +246,10 @@ p { margin: 0 0 var(--sp-md); }
   gap: var(--sp-md) var(--sp-lg);
 }
 .site-footer__copyright {
-  color: rgba(255,255,255,0.6);
+  color: rgba(245, 235, 201, 0.55);
+  border-top: 1px solid rgba(245, 235, 201, 0.18);
   font-size: var(--fs-caption);
   padding-top: var(--sp-md);
-  border-top: 1px solid rgba(255,255,255,0.15);
 }
 
 /* ============================================================
@@ -341,16 +346,6 @@ p { margin: 0 0 var(--sp-md); }
 .hero {
   padding: var(--sp-section) 0 calc(var(--sp-section) / 1.5);
   text-align: center;
-}
-.hero__logo {
-  display: block;
-  width: 220px;
-  height: auto;
-  max-width: 70vw;
-  margin: 0 auto var(--sp-lg);
-}
-@media (min-width: 768px) {
-  .hero__logo { width: 280px; }
 }
 .hero__title {
   font-size: var(--fs-hero);
