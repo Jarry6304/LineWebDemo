@@ -17,6 +17,8 @@ home_hero_subtitle,"陪孩子走進步道，
 成為大自然的學生",首頁副標（\n=換行）
 home_hero_courses_btn,看課程介紹,首頁 hero 按鈕：課程
 home_hero_line_btn,加 LINE 諮詢,首頁 hero 按鈕：LINE
+register_url,https://docs.google.com/forms/d/e/1FAIpQLSdYiOmhPcmSpGkzhIr9cGwcwpl1vM6H52QdZGP3AW_nj55A8Q/viewform,線上報名 Google Form 連結
+home_hero_register_btn,立即報名,首頁 hero 按鈕：報名
 home_about_heading,關於虎甲自然,首頁：品牌故事標題
 home_about_subtitle,城市與自然之間，需要一位引路者,首頁：品牌故事副標
 home_about_more,閱讀完整故事,首頁：展開故事按鈕
@@ -29,6 +31,9 @@ home_cta_heading,想了解更多？,首頁：底部 CTA 標題
 home_cta_text,查看常見問題，或下載完整簡章認識虎甲自然。,首頁：底部 CTA 說明
 home_cta_faq_btn,相關問題,首頁：底部 CTA 按鈕（FAQ）
 home_cta_download_btn,下載簡章,首頁：底部 CTA 按鈕（下載）
+home_register_heading,準備好走進山林了嗎？,首頁：報名區標題
+home_register_text,填寫線上表單，我們會在 3 個工作天內回覆確認。,首頁：報名區說明
+home_register_btn,立即報名,首頁：報名區按鈕
 courses_hero_title,課程介紹,課程頁：主標
 courses_hero_subtitle,點班級卡片看完整課程細節,課程頁：副標
 courses_calendar_heading,課程行事曆,課程頁：行事曆標題
@@ -39,6 +44,7 @@ courses_cta_line_btn,加 LINE 諮詢,課程頁：底部 CTA 按鈕（LINE）
 courses_cta_download_btn,下載簡章,課程頁：底部 CTA 按鈕（下載）
 class_card_more,看詳情,課程卡片：看詳情按鈕
 class_modal_fee_summary,費用包含項目,課程詳情：費用包含 摺疊標題
+class_modal_register_btn,報名此班,課程詳情 Modal：報名按鈕
 class_dates_empty,尚未公布日期,課程詳情：無日期時顯示
 class_list_empty,本系列暫無班級,課程頁：系列無班級時顯示
 calendar_empty,尚未公布行事曆,課程頁：行事曆無資料時顯示

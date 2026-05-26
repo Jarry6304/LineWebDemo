@@ -12,7 +12,7 @@
     renderSeriesPreview(data.series, data.config);
     renderKeywords(data.keywords);
     bindKeywordToggle();
-    bindLineCta(data.config);
+    bindRegisterCta(data.config);
   } catch (err) {
     TBCSV.handleLoadError(err);
   }
@@ -113,9 +113,10 @@
     });
   }
 
-  function bindLineCta(config) {
-    if (!config.line_oa_url) return;
-    const line = document.getElementById('line-cta');
-    if (line) line.href = config.line_oa_url;
+  function bindRegisterCta(config) {
+    if (!config.register_url) return;
+    document.querySelectorAll('#register-cta-hero, #register-cta-home').forEach(el => {
+      el.href = config.register_url;
+    });
   }
 })();

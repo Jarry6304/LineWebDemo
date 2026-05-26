@@ -132,6 +132,13 @@
          </details>`
       : '';
 
+    const registerBlock = data.config.register_url
+      ? `<a href="${TB.escapeHTML(data.config.register_url)}" target="_blank" rel="noopener"
+            class="btn btn--accent btn--lg btn--block" style="margin-top:24px;">
+           ${TB.escapeHTML(data.config.class_modal_register_btn || '報名此班')}
+         </a>`
+      : '';
+
     const modalSuffix = data.config.class_modal_title_suffix || ' · 詳細資訊';
     TB.openModal(c.name + modalSuffix, `
       <div class="card__meta" style="margin-bottom:16px;">
@@ -154,6 +161,7 @@
       <ul class="date-list">${dateListHTML}</ul>
 
       ${feeBlock}
+      ${registerBlock}
     `);
   }
 
