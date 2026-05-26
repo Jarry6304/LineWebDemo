@@ -47,7 +47,9 @@
   }
 
   function formatAnswer(text) {
-    return TB.escapeHTML(text).replace(/\\n/g, '\n');
+    return TB.escapeHTML(text)
+      .replace(/\\n/g, '\n')   // 向後相容：舊資料的 \n 字面值
+      .replace(/\n/g, '<br>'); // 真換行符（Alt+Enter）轉成 <br>
   }
 
   function bindContacts(config) {
