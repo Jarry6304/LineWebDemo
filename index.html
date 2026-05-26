@@ -3,12 +3,14 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <title>虎甲自然 2026 招生｜城市與自然的引路者</title>
-  <meta name="description" content="2026 夏秋季招生中。透過自然觀察與戶外探索，結合山野教育與環境教育，陪孩子走進步道、認識山林。">
-  <meta property="og:title" content="虎甲自然 2026 招生｜城市與自然的引路者">
-  <meta property="og:description" content="2026 夏秋季招生中。透過自然觀察與戶外探索，結合山野教育與環境教育，陪孩子走進步道、認識山林。">
+  <title>虎甲自然｜城市與自然的引路者</title>
+  <meta name="description" content="透過自然觀察與戶外探索，結合山野教育與環境教育，陪孩子走進步道、認識山林。">
+  <meta property="og:title" content="虎甲自然｜城市與自然的引路者">
+  <meta property="og:description" content="透過自然觀察與戶外探索，結合山野教育與環境教育，陪孩子走進步道、認識山林。">
   <meta property="og:type" content="website">
+  <meta property="og:image" content="assets/img/logo-full.png">
   <link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="assets/img/logo-mark.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500&display=swap">
@@ -18,12 +20,12 @@
   <main>
     <!-- Hero -->
     <section class="hero container">
-      <span class="hero__eyebrow" data-term>2026 夏秋季招生中</span>
+      <img src="assets/img/logo-full.png" alt="虎甲自然 Tiger Beetle Nature" class="hero__logo" width="280" height="280" fetchpriority="high">
       <h1 class="hero__title">城市與自然的<br>引路者</h1>
       <p class="hero__subtitle">陪孩子走進步道，<br>成為大自然的學生</p>
       <div class="hero__cta">
-        <a href="register.html" class="btn btn--primary btn--lg">立即報名</a>
-        <a href="courses.html" class="btn btn--secondary btn--lg">看課程</a>
+        <a href="courses.html" class="btn btn--primary btn--lg">看課程介紹</a>
+        <a id="line-cta" href="#" target="_blank" rel="noopener" class="btn btn--accent btn--lg">加 LINE 諮詢</a>
       </div>
     </section>
 
@@ -107,11 +109,11 @@
 
     <!-- 底部 CTA -->
     <section class="section text-center container">
-      <h2>準備好走進山林了嗎？</h2>
-      <p class="muted" style="margin-bottom:32px;">線上說明會 06/21 晚間 19:00，加入 LINE 取得會議連結。</p>
+      <h2>想了解更多？</h2>
+      <p class="muted" style="margin-bottom:32px;">透過 LINE 聯繫我們，或下載完整簡章認識虎甲自然。</p>
       <div class="hero__cta">
-        <a href="register.html" class="btn btn--primary btn--lg">立即報名</a>
-        <a id="line-cta" href="#" target="_blank" rel="noopener" class="btn btn--accent btn--lg">加 LINE 諮詢</a>
+        <a id="line-cta-2" href="#" target="_blank" rel="noopener" class="btn btn--accent btn--lg">加 LINE 諮詢</a>
+        <a href="info.html#download" class="btn btn--secondary btn--lg">下載簡章</a>
       </div>
     </section>
   </main>
@@ -124,17 +126,13 @@
         const data = await TBCSV.loadAll();
         TB.injectHeader(data.config);
         TB.injectFooter(data.config);
-        TB.injectEarlyBirdBanner(data.config);
-
-        // 期數
-        const termEl = document.querySelector('[data-term]');
-        if (data.config.current_term) {
-          termEl.textContent = data.config.current_term + ' 招生中';
-        }
 
         // LINE CTA
-        const lineCta = document.getElementById('line-cta');
-        if (data.config.line_oa_url) lineCta.href = data.config.line_oa_url;
+        if (data.config.line_oa_url) {
+          document.querySelectorAll('#line-cta, #line-cta-2').forEach(el => {
+            el.href = data.config.line_oa_url;
+          });
+        }
 
         // 四宮格點擊展開
         document.querySelectorAll('.keyword').forEach(btn => {
@@ -143,8 +141,6 @@
             btn.setAttribute('aria-expanded', expanded ? 'false' : 'true');
           });
         });
-
-        TB.injectDemoSwitcher();
       } catch (err) {
         TBCSV.handleLoadError(err);
       }

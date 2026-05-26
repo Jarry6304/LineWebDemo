@@ -1,4 +1,4 @@
-/* 共用元件：Header / Footer / 早鳥橫幅 / 工具 / Demo 切換器 */
+/* 共用元件：Header / Footer / 工具 / Modal / Accordion */
 (function(global){
   'use strict';
 
@@ -26,14 +26,6 @@
     return ['日','一','二','三','四','五','六'][d.getDay()];
   }
 
-  function isExpired(dateStr) {
-    if (!dateStr) return false;
-    const target = new Date(dateStr);
-    const today = new Date();
-    today.setHours(0,0,0,0);
-    return target < today;
-  }
-
   function escapeHTML(s) {
     if (s == null) return '';
     return String(s).replace(/[&<>"']/g, ch => ({
@@ -51,9 +43,16 @@
     header.innerHTML = `
       <div class="site-header__inner">
         <a href="index.html" class="site-header__logo">
+          <img src="assets/img/logo-mark.png" alt="" class="site-header__logo-mark" width="32" height="32">
           <span>虎甲自然</span>
         </a>
-        <a href="${escapeHTML(lineUrl)}" class="site-header__back" target="_blank" rel="noopener">返回 LINE</a>
+        <nav class="site-header__nav">
+          <a href="index.html">企業概述</a>
+          <a href="courses.html">課程介紹</a>
+          <a href="info.html#contact">聯絡我們</a>
+          <a href="info.html#download">檔案下載</a>
+        </nav>
+        <a href="${escapeHTML(lineUrl)}" class="site-header__back" target="_blank" rel="noopener">加 LINE</a>
       </div>
     `;
     document.body.insertBefore(header, document.body.firstChild);
@@ -73,76 +72,19 @@
     footer.className = 'site-footer';
     footer.innerHTML = `
       <div class="site-footer__inner">
+        <img src="assets/img/logo-text.png" alt="虎甲自然 Tiger Beetle Nature" class="site-footer__logo" width="200" loading="lazy">
         <div class="site-footer__row">
           <a href="${escapeHTML(lineUrl)}" target="_blank" rel="noopener">LINE 諮詢 ${escapeHTML(lineId)}</a>
           <a href="mailto:${escapeHTML(email)}">${escapeHTML(email)}</a>
           <a href="${escapeHTML(pdfUrl)}" target="_blank" rel="noopener">下載 PDF 簡章</a>
-          <a href="info.html">FAQ / 退費 / 個資</a>
+          <a href="info.html">相關問題</a>
         </div>
         <div class="site-footer__copyright">
-          © 2026 虎甲自然 Tiger Beetle Nature · 城市與自然的引路者
+          © 虎甲自然 · 城市與自然的引路者
         </div>
       </div>
     `;
     document.body.appendChild(footer);
-  }
-
-  // ============================================================
-  // 早鳥橫幅
-  // ============================================================
-  function injectEarlyBirdBanner(config, targetSelector) {
-    if (!config || !config.early_bird_deadline) return;
-    if (isExpired(config.early_bird_deadline)) return;
-    if (sessionStorage.getItem('tb_banner_closed') === '1') return;
-
-    const target = targetSelector ? document.querySelector(targetSelector) : null;
-    const deadline = formatDate(config.early_bird_deadline);
-    const discount = Math.round(Number(config.early_bird_discount || 0) * 100);
-
-    const banner = document.createElement('div');
-    banner.className = 'banner';
-    banner.setAttribute('role', 'status');
-    banner.innerHTML = `
-      <span><strong>早鳥優惠</strong>：${deadline} 前報名享 ${discount}% 折扣</span>
-      <button class="banner__action" data-banner-action>看說明會</button>
-      <button class="banner__close" aria-label="關閉橫幅">×</button>
-    `;
-    banner.querySelector('.banner__close').addEventListener('click', () => {
-      sessionStorage.setItem('tb_banner_closed', '1');
-      banner.remove();
-    });
-    banner.querySelector('[data-banner-action]').addEventListener('click', () => {
-      showBriefingModal(config);
-    });
-    if (target) {
-      target.appendChild(banner);
-    } else {
-      const c = document.createElement('div');
-      c.className = 'container';
-      c.style.padding = '16px 24px 0';
-      c.appendChild(banner);
-      const header = document.querySelector('.site-header');
-      if (header) header.insertAdjacentElement('afterend', c);
-      else document.body.insertBefore(c, document.body.firstChild);
-    }
-  }
-
-  // ============================================================
-  // 說明會 Modal
-  // ============================================================
-  function showBriefingModal(config) {
-    if (isExpired(config.briefing_date && config.briefing_date.split(' ')[0])) {
-      openModal('線上說明會', '<p>本期說明會已結束，請加 LINE 諮詢以了解最新場次。</p>');
-      return;
-    }
-    const date = (config.briefing_date || '').replace(' ', ' ｜ ');
-    const url = config.briefing_url || '';
-    openModal('2026 線上說明會', `
-      <p style="font-size:18px;">時間：${escapeHTML(date)}</p>
-      <p>於 Google Meet 進行，會議連結將於前三日發布於官方 LINE。</p>
-      <p class="muted small">內容：課程理念介紹、行前安全教育、問答環節</p>
-      ${url ? `<a href="${escapeHTML(url)}" target="_blank" rel="noopener" class="btn btn--primary btn--block" style="margin-top:24px;">查看會議連結</a>` : ''}
-    `);
   }
 
   // ============================================================
@@ -202,66 +144,12 @@
   }
 
   // ============================================================
-  // Demo Switcher（測試錯誤狀態用）
-  // ============================================================
-  function injectDemoSwitcher() {
-    const path = location.pathname.split('/').pop() || 'index.html';
-    const params = new URLSearchParams(location.search);
-    const currentSim = params.get('simulate') || '';
-
-    // 提交相關模式只在 register.html 有效，一律導去 register
-    const errorStates = [
-      { key: '', label: '正常模式', target: 'self' },
-      { key: 'fail', label: '報名 API 失敗', target: 'register.html' },
-      { key: 'duplicate', label: '重複報名', target: 'register.html' },
-      { key: 'network', label: '網路斷線', target: 'register.html' },
-      { key: 'full', label: '班級剛好滿班', target: 'register.html' },
-      { key: 'csv', label: 'CSV 載入失敗', target: 'self' },
-    ];
-
-    function buildErrorUrl(s) {
-      const targetPath = s.target === 'self' ? path : s.target;
-      const next = new URLSearchParams();
-      if (s.key) next.set('simulate', s.key);
-      const qs = next.toString();
-      return qs ? `${targetPath}?${qs}` : targetPath;
-    }
-
-    const wrapper = document.createElement('div');
-    wrapper.className = 'demo-switcher';
-    wrapper.innerHTML = `
-      <button class="demo-switcher__toggle" aria-label="Demo 模式切換">Demo</button>
-      <div class="demo-switcher__panel">
-        <div class="demo-switcher__title">錯誤狀態</div>
-        <ul class="demo-switcher__list">
-          ${errorStates.map(s => `<li><a href="${buildErrorUrl(s)}" data-active="${s.key === currentSim}">${s.label}</a></li>`).join('')}
-        </ul>
-        <ul class="demo-switcher__list" style="margin-top:12px;border-top:1px solid #eee;padding-top:8px;">
-          <li><a href="404.html">查看 404 頁</a></li>
-          <li><a href="error.html?reason=csv">查看錯誤頁</a></li>
-        </ul>
-      </div>
-    `;
-    document.body.appendChild(wrapper);
-    const toggle = wrapper.querySelector('.demo-switcher__toggle');
-    toggle.addEventListener('click', () => {
-      const open = wrapper.getAttribute('data-open') === 'true';
-      wrapper.setAttribute('data-open', open ? 'false' : 'true');
-    });
-    document.addEventListener('click', (e) => {
-      if (!wrapper.contains(e.target)) wrapper.setAttribute('data-open', 'false');
-    });
-  }
-
-  // ============================================================
   // 對外 API
   // ============================================================
   global.TB = {
-    formatPrice, formatDate, weekdayOf, isExpired, escapeHTML,
-    injectHeader, injectFooter, injectEarlyBirdBanner,
+    formatPrice, formatDate, weekdayOf, escapeHTML,
+    injectHeader, injectFooter,
     openModal, closeModal,
     singleOpenAccordion,
-    injectDemoSwitcher,
-    showBriefingModal,
   };
 })(window);
