@@ -15,10 +15,10 @@
 <body>
   <main class="error-page">
     <h1 class="error-page__title" data-error-title style="font-size:42px;">系統忙碌中</h1>
-    <p class="error-page__hint" data-error-hint>網站資料載入發生問題，請稍後重新整理。如持續無法載入，歡迎回到 LINE 官方帳號詢問。</p>
+    <p class="error-page__hint" data-error-hint>網站資料載入發生問題，請稍後重新整理。如持續無法載入，歡迎回到 LINE詢問。</p>
     <div class="error-page__actions">
       <button onclick="location.reload()" class="btn btn--primary btn--lg btn--block">重新整理</button>
-      <a id="line-cta" href="https://lin.ee/TPOEska" target="_blank" rel="noopener" class="btn btn--secondary btn--lg btn--block">回到 LINE 官方帳號</a>
+      <a id="line-cta" href="https://lin.ee/TPOEska" target="_blank" rel="noopener" class="btn btn--secondary btn--lg btn--block">回到 LINE</a>
       <a href="index.html" class="btn btn--secondary btn--lg btn--block">回首頁</a>
     </div>
   </main>
@@ -32,7 +32,7 @@
       const hintEl = document.querySelector('[data-error-hint]');
       if (reason === 'csv') {
         titleEl.textContent = '資料載入發生問題';
-        hintEl.textContent = '網站內容暫時無法載入，可能是維護中或網路波動。請稍後重新整理，或回到 LINE 官方帳號詢問。';
+        hintEl.textContent = '網站內容暫時無法載入，可能是維護中或網路波動。請稍後重新整理，或回到 LINE詢問。';
       }
       // 不依賴 CSV 載入，避免錯誤頁再失敗
       TB.injectHeader({});
