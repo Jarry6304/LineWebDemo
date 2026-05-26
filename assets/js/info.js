@@ -1,4 +1,4 @@
-/* info 頁邏輯：FAQ Accordion、聯絡資訊綁定 */
+/* info 頁邏輯：FAQ / 退費 / 個資 / 聯絡綁定 */
 (async function(){
   'use strict';
 
@@ -6,27 +6,24 @@
     const data = await TBCSV.loadAll();
     TB.injectHeader(data.config);
     TB.injectFooter(data.config);
+    TB.applyText(data.config);
 
     renderFAQ(data.faqs);
+    renderRefund(data.refund);
+    renderPrivacy(data.privacy);
     bindContacts(data.config);
 
-    // 處理 hash 跳轉（避開 sticky header）
-    if (location.hash) {
-      const target = document.querySelector(location.hash);
-      if (target) {
-        setTimeout(() => {
-          const y = target.getBoundingClientRect().top + window.scrollY - 72;
-          window.scrollTo({ top: y, behavior: 'smooth' });
-        }, 100);
-      }
-    }
+    TB.handleAnchorScroll();
   } catch (err) {
     TBCSV.handleLoadError(err);
   }
 
+  // ----------------------------------------------------------
+  // FAQ Accordion
+  // ----------------------------------------------------------
   function renderFAQ(faqs) {
     const container = document.querySelector('[data-faq-list]');
-    if (!container) return;
+    if (!container || !faqs) return;
     container.innerHTML = '<div data-accordion></div>';
     const accordion = container.querySelector('[data-accordion]');
 
@@ -39,23 +36,59 @@
             ${TB.escapeHTML(f.question)}
           </span>
         </summary>
-        <div class="accordion__body">${formatAnswer(f.answer)}</div>
+        <div class="accordion__body">${formatMultiline(f.answer)}</div>
       </details>
     `).join('');
 
     TB.singleOpenAccordion('[data-accordion]');
   }
 
-  function formatAnswer(text) {
-    return TB.escapeHTML(text)
-      .replace(/\\n/g, '\n')   // 向後相容：舊資料的 \n 字面值
-      .replace(/\n/g, '<br>'); // 真換行符（Alt+Enter）轉成 <br>
+  // ----------------------------------------------------------
+  // 退費規定 → <tbody> 內生成 <tr>
+  // ----------------------------------------------------------
+  function renderRefund(rows) {
+    const tbody = document.querySelector('[data-refund-rows]');
+    if (!tbody) return;
+    if (!rows || rows.length === 0) {
+      tbody.innerHTML = '';
+      return;
+    }
+    const sorted = rows.slice().sort((a, b) => Number(a.display_order) - Number(b.display_order));
+    tbody.innerHTML = sorted.map(r => `
+      <tr><td>${TB.escapeHTML(r.stage)}</td><td>${TB.escapeHTML(r.ratio)}</td></tr>
+    `).join('');
+  }
+
+  // ----------------------------------------------------------
+  // 個資聲明 → 每段一個 <h3> + <p>
+  // ----------------------------------------------------------
+  function renderPrivacy(rows) {
+    const container = document.querySelector('[data-privacy-list]');
+    if (!container) return;
+    if (!rows || rows.length === 0) {
+      container.innerHTML = '';
+      return;
+    }
+    const sorted = rows.slice().sort((a, b) => Number(a.display_order) - Number(b.display_order));
+    container.innerHTML = sorted.map((r, idx) => {
+      const marginTop = idx === 0 ? '' : 'margin-top:24px;';
+      return `
+        <h3 style="font-size:18px;${marginTop}">${TB.escapeHTML(r.heading)}</h3>
+        <p>${formatMultiline(r.body)}</p>
+      `;
+    }).join('');
+  }
+
+  function formatMultiline(text) {
+    return TB.escapeHTML(text || '')
+      .replace(/\\n/g, '\n')   // 向後相容舊資料的 \n 字面值
+      .replace(/\n/g, '<br>');
   }
 
   function bindContacts(config) {
     const lineCta = document.getElementById('line-cta');
     if (lineCta) {
-      lineCta.href = config.line_oa_url || 'https://lin.ee/TPOEska';
+      lineCta.href = config.line_oa_url || '#';
       const idEl = lineCta.querySelector('[data-line-id]');
       if (idEl && config.line_oa_id) {
         idEl.textContent = config.line_oa_id;

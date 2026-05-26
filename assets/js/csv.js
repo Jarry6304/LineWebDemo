@@ -48,7 +48,6 @@
   function sourceUrl(sheetName) {
     const sid = (global.SITE_CONFIG && global.SITE_CONFIG.GOOGLE_SHEETS_ID || '').trim();
     if (sid) {
-      // Google Sheets gviz CSV endpoint（試算表須設為「擁有連結者可檢視」）
       return `https://docs.google.com/spreadsheets/d/${encodeURIComponent(sid)}/gviz/tq` +
              `?tqx=out:csv&sheet=${encodeURIComponent(sheetName)}`;
     }
@@ -64,20 +63,34 @@
   }
 
   // ============================================================
-  // 載入全部資料（4 個 sheet 並行）
+  // 載入全部資料（10 個 sheet 並行）
   // ============================================================
+  const SHEETS = [
+    'config', 'classes', 'course_dates', 'faqs',
+    'series', 'keywords', 'about', 'refund', 'privacy', 'exp_hints',
+  ];
+
   async function loadAll() {
-    const [classes, dates, faqs, configRows] = await Promise.all([
-      loadSheet('classes'),
-      loadSheet('course_dates'),
-      loadSheet('faqs'),
-      loadSheet('config'),
-    ]);
+    const results = await Promise.all(SHEETS.map(loadSheet));
+    const byName = {};
+    SHEETS.forEach((name, idx) => { byName[name] = results[idx]; });
 
+    // config 表轉為 { key: value } 物件
     const config = {};
-    configRows.forEach(r => { if (r.key) config[r.key] = r.value; });
+    (byName.config || []).forEach(r => { if (r.key) config[r.key] = r.value; });
 
-    return { classes, dates, faqs, config };
+    return {
+      config,
+      classes:    byName.classes    || [],
+      dates:      byName.course_dates || [],
+      faqs:       byName.faqs       || [],
+      series:     byName.series     || [],
+      keywords:   byName.keywords   || [],
+      about:      byName.about      || [],
+      refund:     byName.refund     || [],
+      privacy:    byName.privacy    || [],
+      exp_hints:  byName.exp_hints  || [],
+    };
   }
 
   function handleLoadError(err) {
@@ -86,6 +99,6 @@
   }
 
   global.TBCSV = {
-    parseCSV, loadSheet, loadAll, handleLoadError, sourceUrl,
+    parseCSV, loadSheet, loadAll, handleLoadError, sourceUrl, SHEETS,
   };
 })(window);
