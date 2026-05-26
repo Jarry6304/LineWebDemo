@@ -427,3 +427,44 @@ FodyWeavers.xsd
 *.msix
 *.msm
 *.msp
+
+# ============================================================
+# 虎甲自然網站　資安守則
+# ----------------------------------------------------------
+# 目的：避免維護者誤把內部資料 commit 進 repo（repo 是 public
+# 而且 GitHub Pages 會把所有檔案攤在公網上）
+#
+# 規則：以下檔名 pattern 即使放進 repo 資料夾，git 也假裝看不見
+# ============================================================
+
+# 內部資料（學員名冊、講師費、成本、報名收回）
+data/internal-*
+data/internal/
+data/private-*
+data/private/
+data/*-private.*
+data/*-internal.*
+data/staff-*
+data/students-*
+data/payments-*
+data/*-roster.*
+data/*-roster/
+
+# 通用敏感命名
+*.private.*
+*.secret.*
+*.credentials.*
+INTERNAL.md
+NOTES.md
+TODO-private.md
+
+# 環境變數與密鑰
+.env
+.env.*
+secrets/
+credentials.json
+service-account*.json
+
+# 本機臨時檔（Playwright 等開發工具）
+node_modules/
+*.local.html
