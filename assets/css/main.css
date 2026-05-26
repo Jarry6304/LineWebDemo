@@ -152,6 +152,8 @@ p { margin: 0 0 var(--sp-md); }
 .site-header__logo-mark {
   width: 32px;
   height: 32px;
+  display: block;
+  object-fit: contain;
 }
 .site-header__nav {
   display: none;
@@ -200,6 +202,13 @@ p { margin: 0 0 var(--sp-md); }
   flex-direction: column;
   gap: var(--sp-md);
   font-size: var(--fs-small);
+}
+.site-footer__logo {
+  width: 180px;
+  height: auto;
+  margin-bottom: var(--sp-sm);
+  filter: brightness(0) invert(1);
+  opacity: 0.92;
 }
 .site-footer__row {
   display: flex;
@@ -306,6 +315,16 @@ p { margin: 0 0 var(--sp-md); }
 .hero {
   padding: var(--sp-section) 0 calc(var(--sp-section) / 1.5);
   text-align: center;
+}
+.hero__logo {
+  display: block;
+  width: 220px;
+  height: auto;
+  max-width: 70vw;
+  margin: 0 auto var(--sp-lg);
+}
+@media (min-width: 768px) {
+  .hero__logo { width: 280px; }
 }
 .hero__title {
   font-size: var(--fs-hero);

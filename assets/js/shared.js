@@ -43,6 +43,7 @@
     header.innerHTML = `
       <div class="site-header__inner">
         <a href="index.html" class="site-header__logo">
+          <img src="assets/img/logo-mark.png" alt="" class="site-header__logo-mark" width="32" height="32">
           <span>虎甲自然</span>
         </a>
         <nav class="site-header__nav">
@@ -71,6 +72,7 @@
     footer.className = 'site-footer';
     footer.innerHTML = `
       <div class="site-footer__inner">
+        <img src="assets/img/logo-text.png" alt="虎甲自然 Tiger Beetle Nature" class="site-footer__logo" width="200" loading="lazy">
         <div class="site-footer__row">
           <a href="${escapeHTML(lineUrl)}" target="_blank" rel="noopener">LINE 諮詢 ${escapeHTML(lineId)}</a>
           <a href="mailto:${escapeHTML(email)}">${escapeHTML(email)}</a>
@@ -78,7 +80,7 @@
           <a href="info.html">相關問題</a>
         </div>
         <div class="site-footer__copyright">
-          © 虎甲自然 Tiger Beetle Nature · 城市與自然的引路者
+          © 虎甲自然 · 城市與自然的引路者
         </div>
       </div>
     `;
