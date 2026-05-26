@@ -1,98 +1,178 @@
 # 虎甲自然網站
 
-LINE 嵌入式靜態介紹網站。純 HTML/CSS/JS，無依賴、無 build step。
-適合維護者透過編輯 `data/*.csv` 維護內容後重新部署。
+LINE 嵌入式靜態網站。資料來源支援兩種模式：
 
-## 快速啟動
+- **線上協作版（推薦正式環境）**：所有內容放在 Google Sheets，維護者只在試算表上編輯，網站約 5 分鐘自動更新
+- **本地 CSV 版（開發/離線備援）**：讀取 `data/*.csv`
 
-任意靜態伺服器即可，例如：
+兩種模式同一份程式碼，靠 `assets/js/site-config.js` 一行設定切換。
+
+---
+
+## 快速啟動（本地預覽）
 
 ```bash
-# 方式 1：Python
 python3 -m http.server 8000
-
-# 方式 2：npx serve
-npx serve .
+# 打開 http://localhost:8000/
 ```
 
-打開 `http://localhost:8000/` 即可瀏覽。
+只要 `site-config.js` 的 `GOOGLE_SHEETS_ID` 留空，就會讀本地 `data/*.csv`。
 
-## 頁面動線
+## 切換到 Google Sheets 線上協作版
 
+### 一次性設定（約 5 分鐘）
+
+1. **上傳模板到 Google Drive**
+   - 把 `data/site.xlsx` 下載到電腦
+   - 拖到 Google Drive，右鍵「Open with → Google Sheets」
+   - Google 會自動轉成 Google Sheets 格式
+
+2. **設定試算表分享**
+   - 右上「Share」→ 改為「Anyone with the link → Viewer」
+   - （注意：不要設成可編輯，否則任何人都能改）
+
+3. **複製試算表 ID**
+   - 從網址列：`https://docs.google.com/spreadsheets/d/【這段就是 ID】/edit`
+   - ID 是一串約 40 個字元的英數混合字串
+
+4. **貼到網站設定**
+   - 在 GitHub 上編輯 `assets/js/site-config.js`
+   - 把 ID 填進 `GOOGLE_SHEETS_ID: ''` 的引號內 → Commit
+   - 1–2 分鐘後 GitHub Pages 重 deploy，網站開始抓 Google Sheets
+
+5. **之後的維護**
+   - 直接在 Google Sheets 編輯，**完全不用碰 GitHub**
+   - 約 5 分鐘內網站自動更新（Google CDN 快取）
+   - 想立刻看到改動？網址加 `?nocache=1` 強制刷新
+
+### 想暫時切回本地 CSV
+
+把 `GOOGLE_SHEETS_ID` 改回空字串 → push。1–2 分鐘後網站改讀 `data/*.csv`。
+
+---
+
+## 試算表的 5 個 sheet
+
+| Sheet | 內容 | 列數 |
+|---|---|---|
+| `說明` | 給維護者看的使用規範（網站不會讀） | — |
+| `config` | 站台設定（LINE 連結、Email、PDF 路徑） | 一列一設定 |
+| `classes` | 班級資料 | 一列一班 |
+| `course_dates` | 課程日期 | 一列一堂 |
+| `faqs` | 常見問題 | 一列一題 |
+
+每張表的第 1 列是欄位名稱（**程式依賴，請勿刪除或改名**）。把滑鼠移到欄位名上會看到該欄的說明 comment。
+
+### `config`（站台設定）
+
+| key | value | note |
+|---|---|---|
+| `line_oa_url` | LINE 加入連結 | 例：`https://lin.ee/TPOEska` |
+| `line_oa_id` | LINE 官方帳號 ID | 例：`@821lvzed` |
+| `contact_email` | 聯絡信箱 | |
+| `pdf_url` | 簡章下載路徑 | |
+
+新增設定鍵時：JS 要對應修改才會被使用，不要單方面加。
+
+### `classes`（班級）
+
+| 欄位 | 必填 | 範例 / 規則 |
+|---|---|---|
+| `class_id` | ✓ | 英數小寫，例：`shanshi`、`fengxiang_maple`。**不可重複、不可中文** |
+| `name` | ✓ | 班級名稱，例：`山柿班` |
+| `series` | ✓ | `山野成長` / `自然探索` / `原野觀察` |
+| `level` | ✓ | `初階` / `中階` / `進階` / `挑戰` / `親子` / `探究` |
+| `region` | ✓ | `台北` / `台中` / `宜蘭` ... |
+| `price` | ✓ | 純數字，例：`8000` |
+| `age_range` | ✓ | 例：`小一~小三` |
+| `experience_requirement` | ✓ | `無` / `低頻率` / `中頻率` / `一定程度` |
+| `duration_hours` | ✓ | 純數字，每堂時數 |
+| `transport_note` | ✓ | 例：`大眾交通為主` |
+| `activity_areas` | ✓ | 用、頓號或逗號分隔 |
+| `description` | ✓ | 課程簡介（顯示在卡片上） |
+| `display_order` | ✓ | 小到大排序（整數） |
+
+### `course_dates`（日期）
+
+| 欄位 | 必填 | 範例 / 規則 |
+|---|---|---|
+| `class_id` | ✓ | 必須與 `classes` 表的 `class_id` 完全一致 |
+| `session_no` | ✓ | 第幾堂（整數） |
+| `date` | ✓ | **`YYYY-MM-DD` 純文字格式**（見下方地雷） |
+| `weekday` | ✓ | 單字：`一` / `二` / `六` / `日` |
+| `time_period` | ✓ | `full_day` / `morning` / `afternoon` |
+| `notes` |  | 可空，例：`含接駁包車` |
+
+### `faqs`（常見問題）
+
+| 欄位 | 必填 | 範例 / 規則 |
+|---|---|---|
+| `order` | ✓ | 顯示順序（小到大，整數） |
+| `category` | ✓ | `退費` / `報名` / `安全` ... |
+| `question` | ✓ | 問題 |
+| `answer` | ✓ | 答案。**換行請按 `Alt+Enter`（Mac：`Option+Enter`）** |
+
+---
+
+## 常見地雷
+
+- **`class_id` 必須英數小寫**：中文會壞，不可重複
+- **日期欄一定要純文字格式**：Google Sheets 預設會把 `2026-09-05` 自動辨識成日期，輸出時會變成 `9/5/2026`。預防方法：
+  - 選取 D 欄 → 格式 → 數字 → 純文字
+  - 或在日期前面加一個半形單引號 `'2026-09-05`（單引號不會顯示）
+- **第 1 列不可動**：欄位名稱是程式依賴的識別字串，改名或刪除會壞掉
+- **不可刪欄、插欄**：要新增欄位請先聯絡開發者
+- **新增 sheet 沒關係**：程式只讀指定的 4 個 sheet，其他 sheet 會被忽略
+- **真要改 LINE 連結之類的 config**：到 `config` sheet 改 `value` 欄，**不要動 `key` 欄**
+
+---
+
+## 重新生成 XLSX 模板
+
+XLSX 是一次性模板，平常不用動。但如果欄位規範有更動、想產生新版本給其他維護者：
+
+```bash
+pip install openpyxl
+python3 scripts/build_site_xlsx.py
+# 產生 data/site.xlsx
 ```
-LINE 圖文選單
-  ├─ 企業概述 ─► index.html
-  ├─ 課程介紹 ─► courses.html
-  ├─ 聯絡我們 ─► info.html#contact（或直接 LINE 一對一）
-  └─ 檔案下載 ─► info.html#download
-```
+
+---
 
 ## 檔案結構
 
 ```
 .
-├── index.html          首頁：企業概述（品牌介紹）
-├── courses.html        課程介紹與行事曆
-├── info.html           相關問題（FAQ / 退費 / 個資）+ 聯絡 + 檔案下載
-├── 404.html            找不到頁面
-├── error.html          通用錯誤頁（CSV 載入失敗）
+├── index.html               首頁：企業概述
+├── courses.html             課程介紹與行事曆
+├── info.html                相關問題、聯絡、檔案下載
+├── 404.html / error.html    例外頁
 ├── assets/
 │   ├── css/main.css
-│   ├── js/             shared / csv / courses / info
-│   ├── img/            favicon
+│   ├── js/
+│   │   ├── site-config.js   ★ Google Sheets ID 設定點
+│   │   ├── csv.js           資料載入（本地 CSV 或 Google Sheets）
+│   │   ├── shared.js        Header / Footer / Modal
+│   │   ├── courses.js       課程頁邏輯
+│   │   └── info.js          相關問題頁邏輯
+│   ├── img/                 logo-mark / logo-full / logo-text / favicon
 │   └── tiger-beetle-2026.pdf
-└── data/               ★ 維護者只需要動這個目錄
-    ├── classes.csv     班級資料
-    ├── course_dates.csv 課程日期
-    ├── faqs.csv        FAQ 條目
-    └── config.csv      LINE 連結、Email、PDF 路徑等
+├── data/
+│   ├── site.xlsx            ★ 上傳到 Google Sheets 的模板
+│   ├── config.csv           本地備援
+│   ├── classes.csv          本地備援
+│   ├── course_dates.csv     本地備援
+│   └── faqs.csv             本地備援
+├── scripts/
+│   └── build_site_xlsx.py   從 CSV 重新生成 site.xlsx
+└── .github/workflows/
+    └── deploy.yml           推到 main 自動部署到 GitHub Pages
 ```
 
-## 維護指南
+## 部署
 
-只需編輯 `data/` 目錄下的 4 個 CSV：
-
-- **修改班級**：`classes.csv`（含費用、年齡、區域等）
-- **修改日期**：`course_dates.csv`（每堂課的日期、時段、備註）
-- **修改 FAQ**：`faqs.csv`（順序、分類、問題、答案）
-- **修改設定**：`config.csv`（LINE 連結、Email、PDF 路徑）
-
-改完後重新部署即可，**不需要動到任何 HTML/CSS/JS**。
-
-## 部署（GitHub Pages 自動部署）
-
-本專案使用 GitHub Actions 部署到 GitHub Pages。每次 push 到 `main` 分支即自動上線。
-
-Workflow 已設定 `enablement: true`，第一次跑時會自動啟用 Pages，不需要去 Settings 手動開（前提：repo 是 public）。
+每次 push 到 `main` → GitHub Actions 自動部署到 GitHub Pages（1–2 分鐘）。
 
 ```
-push to main
-  ↓
-.github/workflows/deploy.yml 觸發
-  ↓
-1–2 分鐘後網站更新
-  ↓
 https://jarry6304.github.io/LineWebDemo/
 ```
-
-### 維護流程（瀏覽器內完成）
-
-維護者只需要在 GitHub 網頁上編輯 `data/*.csv` → commit → 自動部署：
-
-1. 在 GitHub repo 找到要改的 CSV（例：`data/classes.csv`）
-2. 點右上鉛筆 icon 編輯
-3. 改完底下寫 commit message → **Commit changes**
-4. 等 1–2 分鐘，網站自動更新
-
-完全不需要 git 或命令列。
-
-### 手動觸發部署
-
-在 repo Actions tab → "Deploy to GitHub Pages" → **Run workflow** 可立即重 deploy。
-
-## 技術備註
-
-- CSV 由瀏覽器 runtime fetch + 解析，不需要 build
-- 設計系統 token 集中於 `assets/css/main.css` 開頭的 `:root`
-- 字體：Noto Sans TC（Google Fonts，`font-display: swap`）
-- 共用元件（header / footer / modal）由 `assets/js/shared.js` 注入

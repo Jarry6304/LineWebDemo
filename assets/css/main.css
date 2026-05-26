@@ -4,19 +4,40 @@
    ============================================================ */
 
 :root {
-  /* Colors */
-  --c-primary: #2D5F3F;
-  --c-primary-dark: #1f4a2e;
-  --c-accent: #A4C763;
-  --c-bg: #FAF7F0;
-  --c-card: #FFFFFF;
-  --c-text: #3A3A3A;
-  --c-text-muted: #8B6F47;
-  --c-warning: #B85C38;
-  --c-danger: #C0392B;
-  --c-success: #2D8659;
-  --c-border: rgba(0,0,0,0.08);
-  --c-overlay: rgba(0,0,0,0.5);
+  /* ────────────────────────────────────────────────────────────
+     色彩系統：森林綠 × 大地棕 × 米色背景
+     設計原則：
+       1. 同色相分明度疊（green/brown 各 3 階）—— 視覺穩定
+       2. 互補色僅用於警示／重點（赤陶橙、警示紅）—— 點綴不喧賓
+       3. 內文 contrast ≥ 4.5:1（WCAG AA），標題 ≥ 7:1（AAA）
+     ──────────────────────────────────────────────────────────── */
+
+  /* 森林綠（主色） */
+  --c-primary:        #2D5F3F;   /* 深森林綠 - 主品牌色 */
+  --c-primary-dark:   #1B4127;   /* 墨綠 - hover / 強調 */
+  --c-primary-light:  #5A8762;   /* 苔綠 - 次要綠 */
+  --c-accent:         #A4C763;   /* 嫩葉綠 - 亮點、徽章 */
+
+  /* 大地棕（副色） */
+  --c-earth:          #8B6F47;   /* 山石棕 - 區域標籤 */
+  --c-earth-dark:     #5C4733;   /* 深土褐 - 標題、強調 */
+  --c-earth-light:    #D9C7A8;   /* 沙米黃 - 淺色區塊 */
+  --c-cream:          #F5EBC9;   /* 羊皮米 - 強調背景 */
+
+  /* 中性 */
+  --c-bg:             #FAF6EC;   /* 暖米背景 */
+  --c-card:           #FFFFFF;   /* 卡片白底 */
+  --c-text:           #2D2418;   /* 暖深褐文字（取代冷灰，全站基礎文字） */
+  --c-text-muted:     #6B5538;   /* 中褐次文字（從 #8B6F47 加深以達 WCAG AA） */
+
+  /* 狀態色（互補與類比） */
+  --c-warning:        #B85C38;   /* 赤陶橙 - 屬於大地系，與綠形成柔和對比 */
+  --c-danger:         #B23A2E;   /* 警示紅（綠的互補） - 僅退費 / 警告使用 */
+  --c-success:        #2D8659;   /* 中綠 - 成功狀態 */
+
+  /* 線條與遮罩 */
+  --c-border:         rgba(92, 71, 51, 0.18);    /* 暖褐邊框 */
+  --c-overlay:        rgba(45, 36, 24, 0.55);    /* 暖深褐遮罩 */
 
   /* Typography - 放大版 */
   --fs-hero: 40px;
@@ -100,6 +121,12 @@ p { margin: 0 0 var(--sp-md); }
 .caption { font-size: var(--fs-caption); color: var(--c-text-muted); }
 .muted { color: var(--c-text-muted); }
 
+/* 品牌書法字體（用於「虎甲自然」品牌字樣） */
+.brand-text {
+  font-family: 'Ma Shan Zheng', 'Noto Serif TC', 'Noto Sans TC', cursive, serif;
+  font-weight: 400;
+}
+
 /* ============================================================
    Layout
    ============================================================ */
@@ -140,20 +167,25 @@ p { margin: 0 0 var(--sp-md); }
   justify-content: space-between;
 }
 .site-header__logo {
-  display: flex;
+  display: inline-flex;
   align-items: center;
   gap: var(--sp-sm);
-  font-size: var(--fs-h3);
-  font-weight: 500;
-  color: var(--c-primary);
   text-decoration: none;
+  line-height: 1;
 }
 .site-header__logo:hover { text-decoration: none; }
 .site-header__logo-mark {
-  width: 32px;
-  height: 32px;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  object-fit: cover;
+  flex-shrink: 0;
   display: block;
-  object-fit: contain;
+}
+.site-header__logo-text {
+  font-size: 28px;
+  color: var(--c-primary-dark);
+  letter-spacing: 0.04em;
 }
 .site-header__nav {
   display: none;
@@ -202,13 +234,6 @@ p { margin: 0 0 var(--sp-md); }
   flex-direction: column;
   gap: var(--sp-md);
   font-size: var(--fs-small);
-}
-.site-footer__logo {
-  width: 180px;
-  height: auto;
-  margin-bottom: var(--sp-sm);
-  filter: brightness(0) invert(1);
-  opacity: 0.92;
 }
 .site-footer__row {
   display: flex;
@@ -304,10 +329,11 @@ p { margin: 0 0 var(--sp-md); }
   background: rgba(45, 95, 63, 0.1);
   color: var(--c-primary);
 }
-.badge--accent { background: rgba(164, 199, 99, 0.25); color: var(--c-primary-dark); }
-.badge--warning { background: rgba(184, 92, 56, 0.15); color: var(--c-warning); }
-.badge--muted { background: rgba(139, 111, 71, 0.12); color: var(--c-text-muted); }
-.badge--danger { background: rgba(192, 57, 43, 0.12); color: var(--c-danger); }
+.badge--accent  { background: rgba(164, 199, 99, 0.30); color: var(--c-primary-dark); }
+.badge--earth   { background: rgba(139, 111, 71, 0.22); color: var(--c-earth-dark); }
+.badge--warning { background: rgba(184, 92, 56, 0.18);  color: #8B3D24; }
+.badge--muted   { background: rgba(92, 71, 51, 0.10);   color: var(--c-text-muted); }
+.badge--danger  { background: rgba(178, 58, 46, 0.14);  color: var(--c-danger); }
 
 /* ============================================================
    Hero
@@ -424,8 +450,8 @@ p { margin: 0 0 var(--sp-md); }
   display: inline-block;
   font-size: var(--fs-caption);
   padding: 2px 10px;
-  background: rgba(164, 199, 99, 0.25);
-  color: var(--c-primary-dark);
+  background: rgba(139, 111, 71, 0.22);
+  color: var(--c-earth-dark);
   border-radius: var(--r-pill);
   margin-right: var(--sp-sm);
   vertical-align: middle;
@@ -603,6 +629,7 @@ body.modal-open { overflow: hidden; }
   padding: var(--sp-xl) var(--sp-lg);
   border-radius: var(--r-card);
   border: 1px solid var(--c-border);
+  border-top: 3px solid var(--c-earth);
   text-align: left;
   display: flex;
   flex-direction: column;
@@ -615,7 +642,8 @@ body.modal-open { overflow: hidden; }
   text-decoration: none;
   transform: translateY(-2px);
   box-shadow: var(--sh-card-hover);
-  border-color: var(--c-accent);
+  border-color: var(--c-border);
+  border-top-color: var(--c-primary);
 }
 .series-card__icon {
   font-size: 36px;
