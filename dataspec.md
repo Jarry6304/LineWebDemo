@@ -122,3 +122,22 @@ flowchart LR
 - 日期欄保持純文字 `YYYY-MM-DD`。
 - 各表第 1 列欄位名不可改、不可刪欄插欄；如需新欄請先改對應 JS。
 - 重新產生 xlsx 模板：`python3 scripts/build_site_xlsx.py`（需 `pip install openpyxl`）。
+
+## ⚠️ 資安守則
+
+規格驅動架構天然定義了資料流：`csv.js` 的 `SHEETS` 列表決定網站讀哪些 sheet。但 **Google Sheets 的分享範圍是「整份試算表」不是「個別 sheet」** —— 即使網站只讀其中 10 張，凡是在同一份試算表的其他 sheet 也會被任何拿到 ID 的人透過 gviz endpoint 抓走：
+
+```
+https://docs.google.com/spreadsheets/d/{SHEETS_ID}/gviz/tq?tqx=out:csv&sheet={任意 sheet 名}
+```
+
+因此規格驅動架構的資料分流原則是：
+
+1. **網站試算表只放對外公開資訊**。不要為了「順手」在裡面加內部用的 sheet（成本、學員名冊、講師費）。
+2. **內部資料用完全分開的另一份試算表**，分享設定改用「指定 email 邀請」，ID 絕不寫進 repo。
+3. **新增 sheet 前先問**：這份資料如果被全網看到我會困擾嗎？會 → 換另一份試算表。
+4. **個資、付款、API token 永遠不入網站試算表**。需要收個資 → Google Form 寫入私人 sheet；需要收款 → 第三方金流。
+
+`.gitignore` 已預設擋住 `data/internal-*`、`data/private-*`、`data/staff-*`、`*.private.*`、`.env` 等檔名 pattern，但這只是最後一道安全網 —— 主要還是靠維護者自覺把資料分流分清楚。
+
+完整的「能放／不能放」對照表與雙軌架構圖見 `README.md` 的「資安守則」段。
