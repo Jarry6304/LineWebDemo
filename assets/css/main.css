@@ -100,6 +100,12 @@ p { margin: 0 0 var(--sp-md); }
 .caption { font-size: var(--fs-caption); color: var(--c-text-muted); }
 .muted { color: var(--c-text-muted); }
 
+/* 品牌書法字體（用於「虎甲自然」品牌字樣） */
+.brand-text {
+  font-family: 'Ma Shan Zheng', 'Noto Serif TC', 'Noto Sans TC', cursive, serif;
+  font-weight: 400;
+}
+
 /* ============================================================
    Layout
    ============================================================ */
@@ -140,20 +146,33 @@ p { margin: 0 0 var(--sp-md); }
   justify-content: space-between;
 }
 .site-header__logo {
-  display: flex;
+  position: relative;
+  display: inline-flex;
   align-items: center;
-  gap: var(--sp-sm);
-  font-size: var(--fs-h3);
-  font-weight: 500;
-  color: var(--c-primary);
   text-decoration: none;
+  padding: 4px 10px;
+  line-height: 1;
 }
 .site-header__logo:hover { text-decoration: none; }
 .site-header__logo-mark {
-  width: 32px;
-  height: 32px;
-  display: block;
-  object-fit: contain;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  object-fit: cover;
+  opacity: 0.55;
+  z-index: 0;
+  pointer-events: none;
+}
+.site-header__logo-text {
+  position: relative;
+  z-index: 1;
+  font-size: 30px;
+  color: var(--c-primary-dark);
+  letter-spacing: 0.04em;
 }
 .site-header__nav {
   display: none;
@@ -202,13 +221,6 @@ p { margin: 0 0 var(--sp-md); }
   flex-direction: column;
   gap: var(--sp-md);
   font-size: var(--fs-small);
-}
-.site-footer__logo {
-  width: 180px;
-  height: auto;
-  margin-bottom: var(--sp-sm);
-  filter: brightness(0) invert(1);
-  opacity: 0.92;
 }
 .site-footer__row {
   display: flex;
