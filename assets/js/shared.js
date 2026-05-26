@@ -77,7 +77,7 @@
           <a href="info.html#contact"    data-cfg="nav_contact">聯絡我們</a>
           <a href="info.html#download"   data-cfg="nav_download">檔案下載</a>
         </nav>
-        <a href="${escapeHTML(lineUrl)}" class="site-header__back" target="_blank" rel="noopener" data-cfg="nav_line">加 LINE</a>
+        <a href="${escapeHTML(lineUrl)}" class="site-header__back" target="_blank" rel="noopener" data-cfg="nav_line">回到 LINE 官方帳號</a>
       </div>
     `;
     document.body.insertBefore(header, document.body.firstChild);
@@ -92,7 +92,7 @@
     const lineId = cfg.line_oa_id || '';
     const email = cfg.contact_email || '';
     const pdfUrl = cfg.pdf_url || '#';
-    const lineLabel = (cfg.footer_line_label || 'LINE 諮詢') + (lineId ? ' ' + lineId : '');
+    const lineLabel = (cfg.footer_line_label || '回到 LINE 官方帳號') + (lineId ? ' ' + lineId : '');
 
     const footer = document.createElement('footer');
     footer.className = 'site-footer';

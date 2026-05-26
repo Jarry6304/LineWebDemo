@@ -794,6 +794,21 @@ body.modal-open { overflow: hidden; }
 @keyframes spin { to { transform: rotate(360deg); } }
 
 /* ============================================================
+   Register block（首頁底部報名強調區）
+   ============================================================ */
+.register-block {
+  background: var(--c-cream);
+  border-radius: var(--r-card);
+  padding: var(--sp-xl) var(--sp-lg);
+  border: 1px solid rgba(139, 111, 71, 0.18);
+}
+.register-block h2 { color: var(--c-primary); }
+.register-block p { margin-bottom: var(--sp-lg); }
+@media (min-width: 768px) {
+  .register-block { padding: calc(var(--sp-xl) * 1.5) var(--sp-xl); }
+}
+
+/* ============================================================
    Refund table
    ============================================================ */
 .refund-table {
