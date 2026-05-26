@@ -8,16 +8,16 @@ nav_home,企業概述,導覽列：首頁
 nav_courses,課程介紹,導覽列：課程
 nav_contact,聯絡我們,導覽列：聯絡
 nav_download,檔案下載,導覽列：下載
-nav_line,回到 LINE 官方帳號,導覽列：右上 LINE 按鈕
+nav_line,回到 LINE,導覽列：右上 LINE 按鈕
 footer_pdf_label,下載 PDF 簡章,頁尾：PDF 連結文字
-footer_line_label,回到 LINE 官方帳號,頁尾：LINE 連結文字（會接上 line_oa_id）
+footer_line_label,回到 LINE,頁尾：LINE 連結文字（會接上 line_oa_id）
 footer_copyright,© 虎甲自然 Tiger Beetle Nature · 城市與自然的引路者,頁尾版權文字
 home_hero_title,"城市與自然的
 引路者",首頁主標（\n=換行）
 home_hero_subtitle,"陪孩子走進步道，
 成為大自然的學生",首頁副標（\n=換行）
 home_hero_courses_btn,看課程介紹,首頁 hero 按鈕：課程
-home_hero_line_btn,回到 LINE 官方帳號,首頁 hero 按鈕：LINE
+home_hero_line_btn,回到 LINE,首頁 hero 按鈕：LINE
 register_url,https://docs.google.com/forms/d/e/1FAIpQLSdYiOmhPcmSpGkzhIr9cGwcwpl1vM6H52QdZGP3AW_nj55A8Q/viewform,線上報名 Google Form 連結
 home_hero_register_btn,立即報名,首頁 hero 按鈕：報名
 home_about_heading,關於虎甲自然,首頁：品牌故事標題
@@ -41,7 +41,7 @@ courses_calendar_heading,課程行事曆,課程頁：行事曆標題
 courses_calendar_subtitle,依月份折疊，點開看當月各班級日期,課程頁：行事曆副標
 courses_cta_heading,想多了解某個班級？,課程頁：底部 CTA 標題
 courses_cta_text,回到 LINE 一對一諮詢，或下載完整簡章。,課程頁：底部 CTA 說明
-courses_cta_line_btn,回到 LINE 官方帳號,課程頁：底部 CTA 按鈕（LINE）
+courses_cta_line_btn,回到 LINE,課程頁：底部 CTA 按鈕（LINE）
 courses_cta_download_btn,下載簡章,課程頁：底部 CTA 按鈕（下載）
 class_card_more,看詳情,課程卡片：看詳情按鈕
 class_modal_fee_summary,費用包含項目,課程詳情：費用包含 摺疊標題
@@ -62,7 +62,7 @@ info_privacy_heading,個人資料保護聲明,問題頁：個資標題
 info_privacy_intro,我們蒐集的個資僅供課程聯繫、保險投保及緊急聯絡使用，絕不提供給第三方。,問題頁：個資前言
 info_privacy_summary,查看完整聲明,問題頁：個資摺疊標題
 info_contact_heading,聯絡我們,問題頁：聯絡標題
-info_contact_line_btn,回到 LINE 官方帳號,問題頁：聯絡 LINE 按鈕
+info_contact_line_btn,回到 LINE,問題頁：聯絡 LINE 按鈕
 info_contact_email_btn,來信詢問,問題頁：聯絡 Email 按鈕
 info_download_heading,檔案下載,問題頁：下載標題
 info_pdf_title,虎甲自然完整簡章 PDF,問題頁：PDF 卡片標題
