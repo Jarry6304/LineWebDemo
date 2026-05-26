@@ -110,9 +110,9 @@
     <!-- 底部 CTA -->
     <section class="section text-center container">
       <h2>想了解更多？</h2>
-      <p class="muted" style="margin-bottom:32px;">透過 LINE 聯繫我們，或下載完整簡章認識虎甲自然。</p>
+      <p class="muted" style="margin-bottom:32px;">查看常見問題，或下載完整簡章認識虎甲自然。</p>
       <div class="hero__cta">
-        <a id="line-cta-2" href="#" target="_blank" rel="noopener" class="btn btn--accent btn--lg">加 LINE 諮詢</a>
+        <a href="info.html" class="btn btn--secondary btn--lg">相關問題</a>
         <a href="info.html#download" class="btn btn--secondary btn--lg">下載簡章</a>
       </div>
     </section>
@@ -130,9 +130,8 @@
 
         // LINE CTA
         if (data.config.line_oa_url) {
-          document.querySelectorAll('#line-cta, #line-cta-2').forEach(el => {
-            el.href = data.config.line_oa_url;
-          });
+          const line = document.getElementById('line-cta');
+          if (line) line.href = data.config.line_oa_url;
         }
 
         // 四宮格點擊展開

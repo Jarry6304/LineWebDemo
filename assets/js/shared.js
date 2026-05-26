@@ -76,7 +76,6 @@
           <a href="${escapeHTML(lineUrl)}" target="_blank" rel="noopener">LINE 諮詢 ${escapeHTML(lineId)}</a>
           <a href="mailto:${escapeHTML(email)}">${escapeHTML(email)}</a>
           <a href="${escapeHTML(pdfUrl)}" target="_blank" rel="noopener">下載 PDF 簡章</a>
-          <a href="info.html">相關問題</a>
         </div>
         <div class="site-footer__copyright">
           © 虎甲自然 Tiger Beetle Nature · 城市與自然的引路者

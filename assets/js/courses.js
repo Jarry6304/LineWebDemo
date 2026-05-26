@@ -57,7 +57,7 @@
           <div class="class-card__price">${TB.formatPrice(c.price)}${priceUnit}</div>
         </div>
         <div class="class-card__meta">
-          <span class="badge">${TB.escapeHTML(c.region)}</span>
+          <span class="badge badge--earth">${TB.escapeHTML(c.region)}</span>
           <span class="badge badge--accent">${TB.escapeHTML(c.level)}</span>
           <span class="badge badge--muted">${TB.escapeHTML(c.age_range)}</span>
         </div>
@@ -98,7 +98,7 @@
 
     TB.openModal(c.name + ' · 詳細資訊', `
       <div class="card__meta" style="margin-bottom:16px;">
-        <span class="badge">${TB.escapeHTML(c.region)}</span>
+        <span class="badge badge--earth">${TB.escapeHTML(c.region)}</span>
         <span class="badge badge--accent">${TB.escapeHTML(c.level)}</span>
         <span class="badge badge--muted">${TB.escapeHTML(c.age_range)}</span>
       </div>
