@@ -91,7 +91,7 @@
     const lineUrl = cfg.line_oa_url || '#';
     const lineId = cfg.line_oa_id || '';
     const email = cfg.contact_email || '';
-    const pdfUrl = cfg.pdf_url || '#';
+    const pdfUrl = (window.SITE_CONFIG && window.SITE_CONFIG.BROCHURE_URL) || '#';
     const lineLabel = (cfg.footer_line_label || '回到 LINE') + (lineId ? ' ' + lineId : '');
 
     const footer = document.createElement('footer');

@@ -110,8 +110,7 @@
       }
     }
     const pdfCard = document.getElementById('pdf-card');
-    if (pdfCard && config.pdf_url) {
-      pdfCard.href = config.pdf_url;
-    }
+    const brochure = window.SITE_CONFIG && window.SITE_CONFIG.BROCHURE_URL;
+    if (pdfCard && brochure) pdfCard.href = brochure;
   }
 })();

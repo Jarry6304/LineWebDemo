@@ -51,5 +51,7 @@
  *  記得把分享關掉 / 刪檔，否則 ID 已外流的事實是無法收回的。
  * ============================================================ */
 window.SITE_CONFIG = {
-  GOOGLE_SHEETS_ID: '',
+  GOOGLE_SHEETS_ID: '<GOOGLE_SHEETS_ID>',
+  // 簡章固定網址:換檔走 Drive「管理版本」(FILE_ID 不變),此值不再更動
+  BROCHURE_URL: 'https://drive.google.com/file/d/<BROCHURE_FILE_ID>/view',
 };

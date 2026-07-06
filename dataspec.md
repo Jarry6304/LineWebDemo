@@ -48,7 +48,7 @@ flowchart LR
 
 `key, value, note`。`key`/`value` 被程式使用，`note` 僅供維護者參考。分為站台設定與各頁文字兩類。
 
-站台設定鍵：`line_oa_url`、`line_oa_id`、`contact_email`、`pdf_url`。
+站台設定鍵：`line_oa_url`、`line_oa_id`、`contact_email`。簡章網址不由本表管理，定錨於 `assets/js/site-config.js` 的 `BROCHURE_URL`（換檔走 Drive「管理版本」，FILE_ID 不變）。
 
 文字鍵命名規則：`home_*`（首頁）、`courses_*`（課程頁）、`info_*`（相關問題頁）、`nav_*`/`footer_*`/`site_name`（共用 header/footer）、`class_*`/`calendar_*`（課程卡片與行事曆）。完整清單見 xlsx config 分頁的 `note` 欄。
 
