@@ -241,4 +241,4 @@ npm run build:public -- --sheet-id <ID或試算表網址>   # 網址含 ? / #，
 .\scripts\public\publish.ps1 -SheetId <ID>            # 先用 -DryRun 檢視，再正式推送
 ```
 
-規格與細則見 `docs/public-build/SPEC.md`。
+允許進 dist 的檔案清單（allowlist）與各項檢查定義在 `scripts/public/build.mjs`；新增頁面或資產時需同步更新 allowlist，否則 Verify 會擋下。

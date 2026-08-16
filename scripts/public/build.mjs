@@ -1,4 +1,4 @@
-/* 乾淨發布版 build：Select → Transform → Verify（規格見 docs/public-build/SPEC.md） */
+/* 乾淨發布版 build：Select → Transform → Verify（用法見 README「發布乾淨版」段） */
 import { readFile, writeFile, copyFile, mkdir, rm, readdir, access } from 'node:fs/promises';
 import path from 'node:path';
 import { fileURLToPath, pathToFileURL } from 'node:url';
