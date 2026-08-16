@@ -240,11 +240,11 @@ async function checkSemanticEquivalence(failures, sheetId) {
     if (a !== b) fail(failures, 'semantic', rel, null, 'minify 後與 main 版不一致（語意可能被改動）');
   }));
 
-  const anchor = "GOOGLE_SHEETS_ID: ''";
+  const anchor = /GOOGLE_SHEETS_ID:\s*(['"])[A-Za-z0-9_-]*\1/;
   const src = await readFile(srcPath(SITE_CONFIG), 'utf8');
   const dist = await readDist(SITE_CONFIG);
-  if (!src.includes(anchor)) {
-    fail(failures, 'semantic', SITE_CONFIG, null, `main 版找不到替換錨點 ${anchor}，無法比對`);
+  if (!anchor.test(src)) {
+    fail(failures, 'semantic', SITE_CONFIG, null, "main 版找不到替換錨點 GOOGLE_SHEETS_ID: '…'，無法比對");
   } else if (dist !== null) {
     const substituted = src.replace(anchor, `GOOGLE_SHEETS_ID: '${sheetId}'`);
     const [a, b] = await Promise.all([minified(substituted, 'js'), minified(dist, 'js')]);

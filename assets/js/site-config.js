@@ -51,5 +51,5 @@
  *  記得把分享關掉 / 刪檔，否則 ID 已外流的事實是無法收回的。
  * ============================================================ */
 window.SITE_CONFIG = {
-  GOOGLE_SHEETS_ID: '',
+  GOOGLE_SHEETS_ID: '1G6xPt-fnZl_gSn2hwsD0vlY44EGVU49X',
 };
