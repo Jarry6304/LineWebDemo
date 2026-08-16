@@ -228,3 +228,17 @@ python3 scripts/build_site_xlsx.py
 ```
 https://jarry6304.github.io/LineWebDemo/
 ```
+
+---
+
+## 發布乾淨版（客戶 repo）
+
+從 `main` 產出無註解、無資料檔、無文件的網站輸出，並以單一 commit 發布：
+
+```powershell
+npm install
+npm run build:public -- --sheet-id <ID或試算表網址>   # 網址含 ? / #，記得用引號包住
+.\scripts\public\publish.ps1 -SheetId <ID>            # 先用 -DryRun 檢視，再正式推送
+```
+
+規格與細則見 `docs/public-build/SPEC.md`。

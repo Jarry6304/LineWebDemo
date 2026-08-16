@@ -468,3 +468,4 @@ service-account*.json
 # 本機臨時檔（Playwright 等開發工具）
 node_modules/
 *.local.html
+dist/
