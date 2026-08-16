@@ -1,0 +1,13 @@
+{
+  "name": "linewebdemo",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build:public": "node scripts/public/build.mjs"
+  },
+  "devDependencies": {
+    "esbuild": "^0.28.2",
+    "html-minifier-terser": "^7.2.0"
+  }
+}
