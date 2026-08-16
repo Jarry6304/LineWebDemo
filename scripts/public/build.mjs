@@ -1,4 +1,6 @@
-/* 乾淨發布版 build：Select → Transform → Verify（用法見 README「發布乾淨版」段） */
+/* 乾淨發布版 build：Select → Transform → Verify
+ * 用法：npm run build:public -- --sheet-id <ID或試算表網址>（或 $env:LINEWEB_SHEET_ID）
+ * 發布：.\scripts\public\publish.ps1 -SheetId <ID>（先 -DryRun 檢視再正式推送） */
 import { readFile, writeFile, copyFile, mkdir, rm, readdir, access } from 'node:fs/promises';
 import path from 'node:path';
 import { fileURLToPath, pathToFileURL } from 'node:url';
